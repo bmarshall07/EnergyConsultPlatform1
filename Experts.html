@@ -1,162 +1,155 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Experts - EnergyConsult</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <style>
-            /* Styling for consultant cards */
-            .consultant-card {
-                background: rgba(27, 31, 34, 0.85);
-                margin: 20px 0;
-                padding: 20px;
-                border-radius: 4px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                transition: transform 0.2s;
-            }
-            .consultant-card:hover {
-                transform: translateY(-2px);
-                border-color: #ffffff;
-            }
-            .consultant-header {
-                display: flex;
-                align-items: center;
-                gap: 20px;
-            }
-            .profile-image {
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.1);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 2em;
-                color: #fff;
-                text-transform: uppercase;
-            }
-            .consultant-info h3 {
-                margin: 0;
-                color: #fff;
-            }
-            .tags {
-                display: flex;
-                gap: 10px;
-                margin: 10px 0;
-                flex-wrap: wrap;
-            }
-            .tag {
-                background: rgba(255, 255, 255, 0.1);
-                padding: 5px 15px;
-                border-radius: 15px;
-                font-size: 0.8em;
-            }
-            .search-bar input {
-                width: 100%;
-                padding: 10px;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 4px;
-                color: #fff;
-                margin-bottom: 2em;
-            }
-            .search-bar input:focus {
-                border-color: #ffffff;
-                outline: none;
-            }
-        </style>
-        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    </head>
-    <body class="is-preload">
-        <!-- Wrapper for the full page -->
-        <div id="wrapper">
-            <!-- Header section -->
-            <header id="header">
-                <div class="logo">
-                    <span class="icon fa-gem"></span>
-                </div>
-                <div class="content">
-                    <div class="inner">
-                        <h1>Our Experts</h1>
-                        <p>Connect with top energy consulting professionals</p>
-                    </div>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="intro.html">Intro</a></li>
-                        <li><a href="experts.html">Experts</a></li>
-                        <li><a href="projects.html">Projects</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                    </ul>
-                </nav>
-            </header>
+<head>
+    <title>Experts - EnergyConsult</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background-color: #1b1f22;
+        }
 
-            <!-- Main content -->
-            <div id="main">
-                <article id="experts">
-                    <h2 class="major">Expert Consultants</h2>
-                    
-                    <!-- Search bar -->
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search for consultants, skills, or expertise...">
-                    </div>
+        .consultant-card {
+            background: rgba(27, 31, 34, 0.85);
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            transition: transform 0.2s;
+        }
 
-                    <!-- Consultant 1 -->
-                    <div class="consultant-card">
-                        <div class="consultant-header">
-                            <div class="profile-image">SC</div>
-                            <div class="consultant-info">
-                                <h3>Dr. Sarah Chen</h3>
-                                <p>Senior Reservoir Engineer</p>
-                                <span class="rating">★ 4.9</span>
-                                <span>47 projects</span>
-                            </div>
-                        </div>
-                        <div class="tags">
-                            <span class="tag">Reservoir Modeling</span>
-                            <span class="tag">Field Development</span>
-                            <span class="tag">EOR</span>
-                        </div>
-                        <p class="availability">Available</p>
-                        <p class="rate">$200-250/hr</p>
-                    </div>
+        .consultant-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffffff;
+        }
 
-                    <!-- Consultant 2 -->
-                    <div class="consultant-card">
-                        <div class="consultant-header">
-                            <div class="profile-image">JR</div>
-                            <div class="consultant-info">
-                                <h3>James Rodriguez</h3>
-                                <p>Geophysicist</p>
-                                <span class="rating">★ 4.8</span>
-                                <span>32 projects</span>
-                            </div>
-                        </div>
-                        <div class="tags">
-                            <span class="tag">Seismic Interpretation</span>
-                            <span class="tag">Basin Analysis</span>
-                        </div>
-                        <p class="availability">Available in 2 weeks</p>
-                        <p class="rate">$180-220/hr</p>
-                    </div>
-                </article>
+        .consultant-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .consultant-info h3 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .availability, .rate {
+            font-size: 0.9em;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input:focus {
+            border-color: #ffffff;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <header id="header">
+            <div class="content">
+                <h1>Our Experts</h1>
+                <p>Connect with top energy consulting professionals</p>
             </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="intro.html">Intro</a></li>
+                    <li><a href="experts.html">Experts</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                </ul>
+            </nav>
+        </header>
 
-            <!-- Footer -->
-            <footer id="footer">
-                <p class="copyright">&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-            </footer>
-        </div>
+        <main>
+            <article id="experts">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for consultants, skills, or expertise..." />
+                </div>
 
-        <div id="bg"></div>
+                <div class="consultant-card">
+                    <div class="consultant-header">
+                        <div class="profile-image">SC</div>
+                        <div class="consultant-info">
+                            <h3>Dr. Sarah Chen</h3>
+                            <p>Senior Reservoir Engineer</p>
+                            <span class="rating">★ 4.9</span>
+                            <span>47 projects</span>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Reservoir Modeling</span>
+                        <span class="tag">Field Development</span>
+                        <span class="tag">EOR</span>
+                    </div>
+                    <p class="availability">Available</p>
+                    <p class="rate">$200-250/hr</p>
+                </div>
 
-        <!-- JavaScript -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
-    </body>
+                <div class="consultant-card">
+                    <div class="consultant-header">
+                        <div class="profile-image">JR</div>
+                        <div class="consultant-info">
+                            <h3>James Rodriguez</h3>
+                            <p>Geophysicist</p>
+                            <span class="rating">★ 4.8</span>
+                            <span>32 projects</span>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Seismic Interpretation</span>
+                        <span class="tag">Basin Analysis</span>
+                    </div>
+                    <p class="availability">Available in 2 weeks</p>
+                    <p class="rate">$180-220/hr</p>
+                </div>
+            </article>
+        </main>
+
+        <footer id="footer">
+            <p>&copy; EnergyConsult. Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
+        </footer>
+    </div>
+</body>
 </html>
