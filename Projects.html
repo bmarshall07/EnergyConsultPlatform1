@@ -1,50 +1,134 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Projects - EnergyConsult</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    </head>
-    <body class="is-preload">
-        <div id="wrapper">
-            <header id="header">
-                <div class="logo">
-                    <span class="icon fa-gem"></span>
+<head>
+    <title>Projects - EnergyConsult</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background-color: #1b1f22;
+        }
+
+        .project-card {
+            background: rgba(27, 31, 34, 0.85);
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            transition: transform 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffffff;
+        }
+
+        .project-header {
+            font-size: 1.3em;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .project-info {
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input:focus {
+            border-color: #ffffff;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <header id="header">
+            <div class="content">
+                <h1>Our Projects</h1>
+                <p>Explore our portfolio of successful energy consulting projects</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="intro.html">Intro</a></li>
+                    <li><a href="experts.html">Experts</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <article id="projects">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for projects, keywords, or companies..." />
                 </div>
-                <div class="content">
-                    <div class="inner">
-                        <h1>Our Projects</h1>
-                        <p>Explore our portfolio of successful energy consulting projects</p>
+
+                <!-- Sample Project 1 -->
+                <div class="project-card">
+                    <div class="project-header">Offshore Field Development Plan</div>
+                    <div class="project-info">
+                        <p><strong>Company:</strong> Blue Ocean Energy</p>
+                        <p><strong>Technical Requirements:</strong> Reservoir modeling, Well planning, EOR simulation</p>
+                        <p><strong>Budget:</strong> $250,000 - $350,000</p>
+                        <p><strong>Duration:</strong> 6 months</p>
+                        <p><strong>Expertise Needed:</strong> Reservoir Engineers, Geoscientists</p>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Reservoir Modeling</span>
+                        <span class="tag">EOR</span>
+                        <span class="tag">Well Planning</span>
                     </div>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="intro.html">Intro</a></li>
-                        <li><a href="experts.html">Experts</a></li>
-                        <li><a href="projects.html">Projects</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                    </ul>
-                </nav>
-            </header>
-            <div id="main">
-                <article>
-                    <h2 class="major">Project Portfolio</h2>
-                    <span class="image main"><img src="images/projects-pic.jpg" alt="Projects" /></span>
-                    <p>Projects content here...</p>
-                </article>
-            </div>
-            <footer id="footer">
-                <p class="copyright">&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-            </footer>
-        </div>
-        <div id="bg"></div>
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
-    </body>
+
+                <!-- Sample Project 2 -->
+                <div class="project-card">
+                    <div class="project-header">Seismic Data Analysis for Exploration</div>
+                    <div class="project-info">
+                        <p><strong>Company:</strong> Prime Geophysics</p>
+                        <p><strong>Technical Requirements:</strong> Seismic interpretation, Basin analysis</p>
+                        <p><strong>Budget:</strong> $100,000 - $150,000</p>
+                        <p><strong>Duration:</strong> 3 months</p>
+                        <p><strong>Expertise Needed:</strong> Geophysicists, Geologists</p>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Seismic Analysis</span>
+                        <span class="tag">Basin Study</span>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer id="footer">
+            <p>&copy; EnergyConsult. Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
+        </footer>
+    </div>
+</body>
 </html>
