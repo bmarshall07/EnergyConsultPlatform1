@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+!DOCTYPE HTML>
 <html>
     <head>
         <title>Experts - EnergyConsult</title>
@@ -11,6 +11,10 @@
                 margin: 20px 0;
                 padding: 20px;
                 border-radius: 4px;
+                transition: transform 0.2s;
+            }
+            .consultant-card:hover {
+                transform: translateY(-2px);
             }
             .consultant-header {
                 display: flex;
@@ -21,9 +25,24 @@
                 width: 80px;
                 height: 80px;
                 border-radius: 50%;
+                background: #2c3e50;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2em;
+                color: #fff;
+                text-transform: uppercase;
             }
             .consultant-info {
                 flex-grow: 1;
+            }
+            .consultant-info h3 {
+                margin: 0;
+                color: #fff;
+            }
+            .consultant-info p {
+                margin: 5px 0;
+                color: #888;
             }
             .rating {
                 color: #ffd700;
@@ -33,6 +52,7 @@
                 display: flex;
                 gap: 10px;
                 margin: 10px 0;
+                flex-wrap: wrap;
             }
             .tag {
                 background: rgba(66, 86, 122, 0.5);
@@ -42,9 +62,23 @@
             }
             .availability {
                 color: #4CAF50;
+                margin: 10px 0;
             }
             .rate {
                 text-align: right;
+                margin: 0;
+                color: #fff;
+            }
+            .search-bar {
+                margin-bottom: 30px;
+            }
+            .search-bar input {
+                width: 100%;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+                color: #fff;
             }
         </style>
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
@@ -52,15 +86,37 @@
     <body class="is-preload">
         <div id="wrapper">
             <header id="header">
-                <!-- Header content remains the same -->
+                <div class="logo">
+                    <span class="icon fa-gem"></span>
+                </div>
+                <div class="content">
+                    <div class="inner">
+                        <h1>Our Experts</h1>
+                        <p>Connect with top energy consulting professionals</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="intro.html">Intro</a></li>
+                        <li><a href="experts.html">Experts</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
+                    </ul>
+                </nav>
             </header>
+
             <div id="main">
                 <article>
                     <h2 class="major">Expert Consultants</h2>
                     
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search for consultants, skills, or expertise...">
+                    </div>
+
                     <div class="consultant-card">
                         <div class="consultant-header">
-                            <img src="images/profile1.jpg" alt="Dr. Sarah Chen" class="profile-image">
+                            <div class="profile-image">SC</div>
                             <div class="consultant-info">
                                 <h3>Dr. Sarah Chen</h3>
                                 <p>Senior Reservoir Engineer</p>
@@ -79,7 +135,7 @@
 
                     <div class="consultant-card">
                         <div class="consultant-header">
-                            <img src="images/profile2.jpg" alt="James Rodriguez" class="profile-image">
+                            <div class="profile-image">JR</div>
                             <div class="consultant-info">
                                 <h3>James Rodriguez</h3>
                                 <p>Geophysicist</p>
@@ -96,11 +152,18 @@
                     </div>
                 </article>
             </div>
+
             <footer id="footer">
                 <p class="copyright">&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
             </footer>
         </div>
+
         <div id="bg"></div>
-        <!-- Scripts remain the same -->
+
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
     </body>
 </html>
