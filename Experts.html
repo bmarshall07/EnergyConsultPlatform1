@@ -12,30 +12,60 @@
             background-color: #1b1f22;
         }
 
-        .content {
-            margin-top: 20px;
+        .consultant-card {
+            background: rgba(27, 31, 34, 0.85);
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            transition: transform 0.2s;
         }
 
-        .join-button {
-            display: inline-block;
-            background: #4CAF50;
-            color: #ffffff;
-            padding: 10px 20px;
-            text-align: center;
-            border-radius: 5px;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
+        .consultant-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffffff;
         }
 
-        .join-button:hover {
-            background: #45a049;
+        .consultant-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .search-bar {
-            margin-bottom: 30px; /* Adjust spacing below the search bar */
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .consultant-info h3 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .availability, .rate {
+            font-size: 0.9em;
         }
 
         .search-bar input {
@@ -45,6 +75,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 4px;
             color: #fff;
+            margin-bottom: 20px;
         }
 
         .search-bar input:focus {
@@ -59,7 +90,6 @@
             <div class="content">
                 <h1>Our Experts</h1>
                 <p>Connect with top energy consulting professionals</p>
-                <a href="join.html" class="join-button">Join the Experts</a>
             </div>
             <nav>
                 <ul>
@@ -75,27 +105,44 @@
         <main>
             <article id="experts">
                 <div class="search-bar">
-                    <input type="text" placeholder="Search for experts, skills, or domains..." />
+                    <input type="text" placeholder="Search for consultants, skills, or expertise..." />
                 </div>
 
-                <!-- Example Expert 1 -->
-                <div class="expert-card">
-                    <div class="expert-header">John Doe</div>
-                    <div class="expert-info">
-                        <p><strong>Specialization:</strong> Reservoir Engineering</p>
-                        <p><strong>Experience:</strong> 10+ years in offshore field development</p>
-                        <p><strong>Skills:</strong> EOR, Well Testing, Simulation</p>
+                <div class="consultant-card">
+                    <div class="consultant-header">
+                        <div class="profile-image">SC</div>
+                        <div class="consultant-info">
+                            <h3>Dr. Sarah Chen</h3>
+                            <p>Senior Reservoir Engineer</p>
+                            <span class="rating">★ 4.9</span>
+                            <span>47 projects</span>
+                        </div>
                     </div>
+                    <div class="tags">
+                        <span class="tag">Reservoir Modeling</span>
+                        <span class="tag">Field Development</span>
+                        <span class="tag">EOR</span>
+                    </div>
+                    <p class="availability">Available</p>
+                    <p class="rate">$200-250/hr</p>
                 </div>
 
-                <!-- Example Expert 2 -->
-                <div class="expert-card">
-                    <div class="expert-header">Jane Smith</div>
-                    <div class="expert-info">
-                        <p><strong>Specialization:</strong> Seismic Interpretation</p>
-                        <p><strong>Experience:</strong> 8+ years in exploration projects</p>
-                        <p><strong>Skills:</strong> Basin Analysis, 3D Modeling</p>
+                <div class="consultant-card">
+                    <div class="consultant-header">
+                        <div class="profile-image">JR</div>
+                        <div class="consultant-info">
+                            <h3>James Rodriguez</h3>
+                            <p>Geophysicist</p>
+                            <span class="rating">★ 4.8</span>
+                            <span>32 projects</span>
+                        </div>
                     </div>
+                    <div class="tags">
+                        <span class="tag">Seismic Interpretation</span>
+                        <span class="tag">Basin Analysis</span>
+                    </div>
+                    <p class="availability">Available in 2 weeks</p>
+                    <p class="rate">$180-220/hr</p>
                 </div>
             </article>
         </main>
