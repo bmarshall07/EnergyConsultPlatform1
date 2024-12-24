@@ -46,12 +46,13 @@
 
         .search-bar input {
             width: 100%;
-            max-width: 500px; /* Limiting input width for better alignment */
+            max-width: 700px; /* Limiting input width for better alignment */
             padding: 10px;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 4px;
             color: #fff;
+            margin-top: 30px; /* Added space between search box and navigation */
         }
 
         .search-bar input:focus {
@@ -66,9 +67,9 @@
             padding: 20px;
             margin-bottom: 30px;
             display: flex;
-            align-items: center;
             flex-direction: column;
-            max-width: 300px;
+            align-items: center;
+            max-width: 320px; /* Adjust width to match the header's layout */
             margin-left: auto;
             margin-right: auto;
             transition: border-color 0.3s ease;
@@ -97,6 +98,7 @@
             text-align: left;
             width: 100%;
             color: #ddd;
+            margin-bottom: 15px;
         }
 
         .expert-info p {
@@ -105,6 +107,33 @@
 
         .expert-info strong {
             color: #fff;
+        }
+
+        .expert-skills,
+        .expert-projects,
+        .expert-testimonials {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #34495e;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .expert-skills span,
+        .expert-projects span,
+        .expert-testimonials span {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #45a049;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.9em;
+        }
+
+        .expert-projects p,
+        .expert-testimonials p {
+            color: #ddd;
         }
 
         @media screen and (max-width: 768px) {
@@ -147,7 +176,21 @@
                     <div class="expert-info">
                         <p><strong>Specialization:</strong> Reservoir Engineering</p>
                         <p><strong>Experience:</strong> 10+ years in offshore field development</p>
-                        <p><strong>Skills:</strong> EOR, Well Testing, Simulation</p>
+                        <p><strong>Certifications:</strong> SPE Certified, EOR Specialist</p>
+                    </div>
+                    <div class="expert-skills">
+                        <strong>Skills:</strong>
+                        <span>EOR</span>
+                        <span>Well Testing</span>
+                        <span>Simulation</span>
+                    </div>
+                    <div class="expert-projects">
+                        <strong>Past Projects:</strong>
+                        <p>Offshore field development for XYZ Corp. Resulted in 25% increase in recovery factor.</p>
+                    </div>
+                    <div class="expert-testimonials">
+                        <strong>Client Testimonials:</strong>
+                        <p>"John's expertise in reservoir engineering significantly improved our field development strategy." – ABC Energy</p>
                     </div>
                 </div>
 
@@ -158,7 +201,21 @@
                     <div class="expert-info">
                         <p><strong>Specialization:</strong> Seismic Interpretation</p>
                         <p><strong>Experience:</strong> 8+ years in exploration projects</p>
-                        <p><strong>Skills:</strong> Basin Analysis, 3D Modeling</p>
+                        <p><strong>Certifications:</strong> Certified Seismic Interpreter</p>
+                    </div>
+                    <div class="expert-skills">
+                        <strong>Skills:</strong>
+                        <span>Basin Analysis</span>
+                        <span>3D Modeling</span>
+                        <span>Geophysical Analysis</span>
+                    </div>
+                    <div class="expert-projects">
+                        <strong>Past Projects:</strong>
+                        <p>Lead seismic interpretation for exploration in the North Sea, discovering a new prospect with 30% potential reserves increase.</p>
+                    </div>
+                    <div class="expert-testimonials">
+                        <strong>Client Testimonials:</strong>
+                        <p>"Jane's seismic analysis was key to uncovering hidden reserves. She is an asset to any team." – DEF Geophysics</p>
                     </div>
                 </div>
             </article>
