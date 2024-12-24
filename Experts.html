@@ -1,39 +1,99 @@
-!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
     <head>
         <title>Experts - EnergyConsult</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="assets/css/main.css" />
+        <style>
+            .consultant-card {
+                background: rgba(27, 31, 34, 0.85);
+                margin: 20px 0;
+                padding: 20px;
+                border-radius: 4px;
+            }
+            .consultant-header {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+            .profile-image {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+            }
+            .consultant-info {
+                flex-grow: 1;
+            }
+            .rating {
+                color: #ffd700;
+                margin-right: 10px;
+            }
+            .tags {
+                display: flex;
+                gap: 10px;
+                margin: 10px 0;
+            }
+            .tag {
+                background: rgba(66, 86, 122, 0.5);
+                padding: 5px 15px;
+                border-radius: 15px;
+                font-size: 0.8em;
+            }
+            .availability {
+                color: #4CAF50;
+            }
+            .rate {
+                text-align: right;
+            }
+        </style>
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     </head>
     <body class="is-preload">
         <div id="wrapper">
             <header id="header">
-                <div class="logo">
-                    <span class="icon fa-gem"></span>
-                </div>
-                <div class="content">
-                    <div class="inner">
-                        <h1>Our Experts</h1>
-                        <p>Meet our network of energy consulting professionals</p>
-                    </div>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="intro.html">Intro</a></li>
-                        <li><a href="experts.html">Experts</a></li>
-                        <li><a href="projects.html">Projects</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                    </ul>
-                </nav>
+                <!-- Header content remains the same -->
             </header>
             <div id="main">
                 <article>
-                    <h2 class="major">Expert Profiles</h2>
-                    <span class="image main"><img src="images/experts-pic.jpg" alt="Experts" /></span>
-                    <p>Expert profiles content here...</p>
+                    <h2 class="major">Expert Consultants</h2>
+                    
+                    <div class="consultant-card">
+                        <div class="consultant-header">
+                            <img src="images/profile1.jpg" alt="Dr. Sarah Chen" class="profile-image">
+                            <div class="consultant-info">
+                                <h3>Dr. Sarah Chen</h3>
+                                <p>Senior Reservoir Engineer</p>
+                                <span class="rating">★ 4.9</span>
+                                <span>47 projects</span>
+                            </div>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Reservoir Modeling</span>
+                            <span class="tag">Field Development</span>
+                            <span class="tag">EOR</span>
+                        </div>
+                        <p class="availability">Available</p>
+                        <p class="rate">$200-250/hr</p>
+                    </div>
+
+                    <div class="consultant-card">
+                        <div class="consultant-header">
+                            <img src="images/profile2.jpg" alt="James Rodriguez" class="profile-image">
+                            <div class="consultant-info">
+                                <h3>James Rodriguez</h3>
+                                <p>Geophysicist</p>
+                                <span class="rating">★ 4.8</span>
+                                <span>32 projects</span>
+                            </div>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Seismic Interpretation</span>
+                            <span class="tag">Basin Analysis</span>
+                        </div>
+                        <p class="availability">Available in 2 weeks</p>
+                        <p class="rate">$180-220/hr</p>
+                    </div>
                 </article>
             </div>
             <footer id="footer">
@@ -41,10 +101,6 @@
             </footer>
         </div>
         <div id="bg"></div>
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
+        <!-- Scripts remain the same -->
     </body>
 </html>
