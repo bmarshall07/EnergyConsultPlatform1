@@ -10,10 +10,13 @@
             font-family: Arial, sans-serif;
             color: #ffffff;
             background-color: #1b1f22;
+            margin: 0;
+            padding: 0;
         }
 
         .content {
             margin-top: 20px;
+            text-align: center;
         }
 
         .join-button {
@@ -38,10 +41,12 @@
 
         .search-bar {
             margin-bottom: 30px; /* Adjust spacing below the search bar */
+            text-align: center;
         }
 
         .search-bar input {
             width: 100%;
+            max-width: 500px; /* Limiting input width for better alignment */
             padding: 10px;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -57,9 +62,15 @@
         .expert-card {
             background-color: #2d3436; /* Darker card background */
             border: 1px solid #ffffff; /* Thin border around profiles */
-            border-radius: 5px;
+            border-radius: 8px;
             padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
             transition: border-color 0.3s ease;
         }
 
@@ -67,13 +78,40 @@
             border-color: #45a049; /* Green border on hover */
         }
 
+        .expert-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Circular avatar */
+            background-color: #ccc; /* Placeholder background color */
+            margin-bottom: 20px;
+            object-fit: cover; /* Ensures image covers the circular shape */
+        }
+
         .expert-header {
             font-size: 1.5em;
             font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .expert-info {
-            margin-top: 10px;
+            text-align: left;
+            width: 100%;
+            color: #ddd;
+        }
+
+        .expert-info p {
+            margin: 5px 0;
+        }
+
+        .expert-info strong {
+            color: #fff;
+        }
+
+        @media screen and (max-width: 768px) {
+            .expert-card {
+                max-width: 100%; /* Ensure cards fit on smaller screens */
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -104,6 +142,7 @@
 
                 <!-- Example Expert 1 -->
                 <div class="expert-card">
+                    <img src="https://via.placeholder.com/100" alt="John Doe" class="expert-avatar" />
                     <div class="expert-header">John Doe</div>
                     <div class="expert-info">
                         <p><strong>Specialization:</strong> Reservoir Engineering</p>
@@ -114,6 +153,7 @@
 
                 <!-- Example Expert 2 -->
                 <div class="expert-card">
+                    <img src="https://via.placeholder.com/100" alt="Jane Smith" class="expert-avatar" />
                     <div class="expert-header">Jane Smith</div>
                     <div class="expert-info">
                         <p><strong>Specialization:</strong> Seismic Interpretation</p>
