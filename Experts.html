@@ -1,4 +1,4 @@
-!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
     <head>
         <title>Experts - EnergyConsult</title>
@@ -11,10 +11,12 @@
                 margin: 20px 0;
                 padding: 20px;
                 border-radius: 4px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
                 transition: transform 0.2s;
             }
             .consultant-card:hover {
                 transform: translateY(-2px);
+                border-color: #ffffff;
             }
             .consultant-header {
                 display: flex;
@@ -25,7 +27,7 @@
                 width: 80px;
                 height: 80px;
                 border-radius: 50%;
-                background: #2c3e50;
+                background: rgba(255, 255, 255, 0.1);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -33,20 +35,9 @@
                 color: #fff;
                 text-transform: uppercase;
             }
-            .consultant-info {
-                flex-grow: 1;
-            }
             .consultant-info h3 {
                 margin: 0;
                 color: #fff;
-            }
-            .consultant-info p {
-                margin: 5px 0;
-                color: #888;
-            }
-            .rating {
-                color: #ffd700;
-                margin-right: 10px;
             }
             .tags {
                 display: flex;
@@ -55,22 +46,10 @@
                 flex-wrap: wrap;
             }
             .tag {
-                background: rgba(66, 86, 122, 0.5);
+                background: rgba(255, 255, 255, 0.1);
                 padding: 5px 15px;
                 border-radius: 15px;
                 font-size: 0.8em;
-            }
-            .availability {
-                color: #4CAF50;
-                margin: 10px 0;
-            }
-            .rate {
-                text-align: right;
-                margin: 0;
-                color: #fff;
-            }
-            .search-bar {
-                margin-bottom: 30px;
             }
             .search-bar input {
                 width: 100%;
@@ -79,6 +58,11 @@
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 border-radius: 4px;
                 color: #fff;
+                margin-bottom: 2em;
+            }
+            .search-bar input:focus {
+                border-color: #ffffff;
+                outline: none;
             }
         </style>
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
@@ -107,7 +91,7 @@
             </header>
 
             <div id="main">
-                <article>
+                <article id="experts">
                     <h2 class="major">Expert Consultants</h2>
                     
                     <div class="search-bar">
@@ -167,3 +151,6 @@
         <script src="assets/js/main.js"></script>
     </body>
 </html>
+Last edited just now
+
+
