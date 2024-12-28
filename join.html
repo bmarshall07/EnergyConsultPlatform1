@@ -1,35 +1,41 @@
-// Import Firebase modules
-import { database, ref, set } from './assets/js/firebase-config.js';
+<script type="module">
+    // Import Firebase modules
+    import { database, ref, set } from './assets/js/firebase-config.js';
 
-// Handle form submission
-document.getElementById("expertForm").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form reload
+    // Handle form submission
+    document.getElementById("submitProfile").addEventListener("click", function () {
+        // Capture form inputs
+        const fullName = document.getElementById("fullName").value;
+        const specialization = document.getElementById("specialization").value;
+        const experience = document.getElementById("experience").value;
+        const keySkills = document.getElementById("keySkills").value;
+        const certifications = document.getElementById("certifications").value;
+        const projects = document.getElementById("projects").value;
 
-    // Capture form inputs
-    const fullName = document.getElementById("fullName").value;
-    const specialization = document.getElementById("specialization").value;
-    const experience = document.getElementById("experience").value;
-    const keySkills = document.getElementById("keySkills").value;
-    const certifications = document.getElementById("certifications").value;
-    const projects = document.getElementById("projects").value;
+        // Validate that all fields are filled
+        if (!fullName || !specialization || !experience || !keySkills || !certifications || !projects) {
+            alert("Please fill out all fields!");
+            return;
+        }
 
-    // Generate a unique ID for each submission
-    const userId = Date.now();
+        // Generate a unique ID for each submission
+        const userId = Date.now();
 
-    // Write data to Firebase Realtime Database
-    set(ref(database, `experts/${userId}`), {
-        fullName: fullName,
-        specialization: specialization,
-        experience: experience,
-        keySkills: keySkills,
-        certifications: certifications,
-        projects: projects
-    })
-        .then(() => {
-            alert("Profile submitted successfully!");
-            document.getElementById("expertForm").reset(); // Reset the form
+        // Write data to Firebase Realtime Database
+        set(ref(database, `experts/${userId}`), {
+            fullName: fullName,
+            specialization: specialization,
+            experience: experience,
+            keySkills: keySkills,
+            certifications: certifications,
+            projects: projects
         })
-        .catch((error) => {
-            alert("Error submitting profile: " + error.message);
-        });
-});
+            .then(() => {
+                alert("Profile submitted successfully!");
+                document.getElementById("expertForm").reset(); // Reset the form
+            })
+            .catch((error) => {
+                alert("Error submitting profile: " + error.message);
+            });
+    });
+</script>
