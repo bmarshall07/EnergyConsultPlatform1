@@ -2,17 +2,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Your Firebase project configuration object
 const firebaseConfig = {
-  apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
-  authDomain: "energyconsult-7a837.firebaseapp.com",
-  databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "energyconsult-7a837",
-  storageBucket: "energyconsult-7a837.firebasestorage.app",
-  messagingSenderId: "131060027292",
-  appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
-  measurementId: "G-FT6CQTN0P2"
+  apiKey: "YOUR_API_KEY", // Replace with your Firebase API key
+  authDomain: "YOUR_AUTH_DOMAIN", // Replace with your Firebase auth domain
+  databaseURL: "YOUR_DATABASE_URL", // Replace with your Firebase Realtime Database URL
+  projectId: "YOUR_PROJECT_ID", // Replace with your Firebase project ID
+  storageBucket: "YOUR_STORAGE_BUCKET", // Replace with your Firebase storage bucket URL
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // Replace with your messaging sender ID
+  appId: "YOUR_APP_ID" // Replace with your Firebase app ID
 };
 
 // Initialize Firebase
