@@ -1,10 +1,18 @@
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Import and configure Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyALxTMkfLf_n-BttEsmJWuSZBAloRM0RQU",
-  authDomain: "energyconsult-a0555.firebaseapp.com",
-  projectId: "energyconsult-a0555",
-  storageBucket: "energyconsult-a0555.firebasestorage.app",
-  messagingSenderId: "378868227507",
-  appId: "1:378868227507:web:1688a3f4e29d67f25affc6",
-  measurementId: "G-4ZS18E2DRY"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+export { database, ref, set };
