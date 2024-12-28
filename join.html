@@ -1,44 +1,95 @@
-<script type="module">
-    // Import Firebase modules
-    import { database, ref, set } from './assets/js/firebase-config.js';
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Join the Experts - EnergyConsult</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+    <div id="wrapper">
+        <header id="header">
+            <div class="content">
+                <h1>Join the Experts</h1>
+                <p>Fill in the form to join our expert network.</p>
+            </div>
+        </header>
 
-    // Handle form submission
-    document.getElementById("expertForm").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form reload
+        <main>
+            <article>
+                <form id="expertForm">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" required>
 
-        // Capture form inputs
-        const fullName = document.getElementById("fullName").value;
-        const specialization = document.getElementById("specialization").value;
-        const experience = document.getElementById("experience").value;
-        const keySkills = document.getElementById("keySkills").value;
-        const certifications = document.getElementById("certifications").value;
-        const projects = document.getElementById("projects").value;
+                    <label for="specialization">Specialization:</label>
+                    <input type="text" id="specialization" required>
 
-        // Validate that all fields are filled
-        if (!fullName || !specialization || !experience || !keySkills || !certifications || !projects) {
-            alert("Please fill out all fields!");
-            return;
-        }
+                    <label for="experience">Experience:</label>
+                    <input type="text" id="experience" required>
 
-        // Generate a unique ID for each submission
-        const userId = Date.now();
+                    <label for="keySkills">Key Skills:</label>
+                    <input type="text" id="keySkills" required>
 
-        // Write data to Firebase Realtime Database
-        set(ref(database, `experts/${userId}`), {
-            fullName: fullName,
-            specialization: specialization,
-            experience: experience,
-            keySkills: keySkills,
-            certifications: certifications,
-            projects: projects
-        })
-            .then(() => {
-                alert("Profile submitted successfully!");
-                document.getElementById("expertForm").reset(); // Reset the form
+                    <label for="certifications">Certifications:</label>
+                    <input type="text" id="certifications" required>
+
+                    <label for="projects">Projects:</label>
+                    <input type="text" id="projects" required>
+
+                    <button type="submit">Submit Profile</button>
+                </form>
+            </article>
+        </main>
+
+        <footer id="footer">
+            <p>&copy; EnergyConsult. Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        import { database, ref, set } from './assets/js/firebase-config.js';
+
+        document.getElementById("expertForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form reload
+
+            // Capture form inputs
+            const fullName = document.getElementById("fullName").value;
+            const specialization = document.getElementById("specialization").value;
+            const experience = document.getElementById("experience").value;
+            const keySkills = document.getElementById("keySkills").value;
+            const certifications = document.getElementById("certifications").value;
+            const projects = document.getElementById("projects").value;
+
+            // Validate that all fields are filled
+            if (!fullName || !specialization || !experience || !keySkills || !certifications || !projects) {
+                alert("Please fill out all fields!");
+                return;
+            }
+
+            console.log('Form data:', fullName, specialization, experience, keySkills, certifications, projects);
+
+            // Generate a unique ID for each submission
+            const userId = Date.now();
+
+            // Write data to Firebase Realtime Database
+            set(ref(database, `experts/${userId}`), {
+                fullName: fullName,
+                specialization: specialization,
+                experience: experience,
+                keySkills: keySkills,
+                certifications: certifications,
+                projects: projects
             })
-            .catch((error) => {
-                alert("Error submitting profile: " + error.message);
-            });
-    });
-</script>
+                .then(() => {
+                    alert("Profile submitted successfully!");
+                    document.getElementById("expertForm").reset(); // Reset the form
+                })
+                .catch((error) => {
+                    alert("Error submitting profile: " + error.message);
+                });
+        });
+    </script>
+</body>
+</html>
+
 
