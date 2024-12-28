@@ -1,82 +1,35 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>Join - EnergyConsult</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    </head>
-    <body class="is-preload">
-        <div id="wrapper">
-            <header id="header">
-                <div class="logo">
-                    <span class="icon fa-gem"></span>
-                </div>
-                <div class="content">
-                    <div class="inner">
-                        <h1>Join EnergyConsult</h1>
-                        <p>Start showcasing your expertise to potential clients.</p>
-                    </div>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="intro.html">Intro</a></li>
-                        <li><a href="experts.html">Experts</a></li>
-                        <li><a href="projects.html">Projects</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                    </ul>
-                </nav>
-            </header>
-            <div id="main">
-                <article>
-                    <h2 class="major">Expert Profile</h2>
-                    <form id="expertForm" method="post" action="submit_profile.php">
-                        <div class="fields">
-                            <div class="field">
-                                <label for="fullName">Full Name</label>
-                                <input type="text" id="fullName" name="fullName" required />
-                            </div>
-                            <div class="field">
-                                <label for="specialization">Specialization</label>
-                                <input type="text" id="specialization" name="specialization" placeholder="e.g., Reservoir Engineering" required />
-                            </div>
-                            <div class="field">
-                                <label for="experience">Experience</label>
-                                <textarea id="experience" name="experience" rows="3" required></textarea>
-                            </div>
-                            <div class="field">
-                                <label for="keySkills">Key Skills</label>
-                                <input type="text" id="keySkills" name="keySkills" placeholder="e.g., Well Testing, Simulation" required />
-                            </div>
-                            <div class="field">
-                                <label for="certifications">Certifications</label>
-                                <input type="text" id="certifications" name="certifications" placeholder="e.g., PMP, PE" required />
-                            </div>
-                            <div class="field">
-                                <label for="projects">Notable Projects</label>
-                                <textarea id="projects" name="projects" rows="3" required></textarea>
-                            </div>
-                        </div>
-                        <ul class="actions">
-                            <li><input type="submit" value="Submit Profile" class="primary" /></li>
-                            <li><input type="reset" value="Reset" /></li>
-                        </ul>
-                    </form>
-                </article>
-            </div>
-            <footer id="footer">
-                <p class="copyright">&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-            </footer>
-        </div>
-        <div id="bg"></div>
+// Import Firebase modules
+import { database, ref, set } from './assets/js/firebase-config.js';
 
-        <!-- Template Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
-    </body>
-</html>
+// Handle form submission
+document.getElementById("expertForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form reload
+
+    // Capture form inputs
+    const fullName = document.getElementById("fullName").value;
+    const specialization = document.getElementById("specialization").value;
+    const experience = document.getElementById("experience").value;
+    const keySkills = document.getElementById("keySkills").value;
+    const certifications = document.getElementById("certifications").value;
+    const projects = document.getElementById("projects").value;
+
+    // Generate a unique ID for each submission
+    const userId = Date.now();
+
+    // Write data to Firebase Realtime Database
+    set(ref(database, `experts/${userId}`), {
+        fullName: fullName,
+        specialization: specialization,
+        experience: experience,
+        keySkills: keySkills,
+        certifications: certifications,
+        projects: projects
+    })
+        .then(() => {
+            alert("Profile submitted successfully!");
+            document.getElementById("expertForm").reset(); // Reset the form
+        })
+        .catch((error) => {
+            alert("Error submitting profile: " + error.message);
+        });
+});
