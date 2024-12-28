@@ -3,7 +3,9 @@
     import { database, ref, set } from './assets/js/firebase-config.js';
 
     // Handle form submission
-    document.getElementById("submitProfile").addEventListener("click", function () {
+    document.getElementById("expertForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form reload
+
         // Capture form inputs
         const fullName = document.getElementById("fullName").value;
         const specialization = document.getElementById("specialization").value;
@@ -39,3 +41,4 @@
             });
     });
 </script>
+
