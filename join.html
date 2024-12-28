@@ -32,31 +32,31 @@
             <div id="main">
                 <article>
                     <h2 class="major">Expert Profile</h2>
-                    <form id="expertForm" method="post">
+                    <form id="expertForm" method="post" action="submit_profile.php">
                         <div class="fields">
                             <div class="field">
                                 <label for="fullName">Full Name</label>
-                                <input type="text" id="fullName" required />
+                                <input type="text" id="fullName" name="fullName" required />
                             </div>
                             <div class="field">
                                 <label for="specialization">Specialization</label>
-                                <input type="text" id="specialization" placeholder="e.g., Reservoir Engineering" required />
+                                <input type="text" id="specialization" name="specialization" placeholder="e.g., Reservoir Engineering" required />
                             </div>
                             <div class="field">
                                 <label for="experience">Experience</label>
-                                <textarea id="experience" rows="3" required></textarea>
+                                <textarea id="experience" name="experience" rows="3" required></textarea>
                             </div>
                             <div class="field">
                                 <label for="keySkills">Key Skills</label>
-                                <input type="text" id="keySkills" placeholder="e.g., Well Testing, Simulation" required />
+                                <input type="text" id="keySkills" name="keySkills" placeholder="e.g., Well Testing, Simulation" required />
                             </div>
                             <div class="field">
                                 <label for="certifications">Certifications</label>
-                                <input type="text" id="certifications" placeholder="e.g., PMP, PE" required />
+                                <input type="text" id="certifications" name="certifications" placeholder="e.g., PMP, PE" required />
                             </div>
                             <div class="field">
                                 <label for="projects">Notable Projects</label>
-                                <textarea id="projects" rows="3" required></textarea>
+                                <textarea id="projects" name="projects" rows="3" required></textarea>
                             </div>
                         </div>
                         <ul class="actions">
@@ -78,8 +78,5 @@
         <script src="assets/js/breakpoints.min.js"></script>
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
-
-        <!-- Firebase Setup -->
-        <script type="module" src="assets/js/firebase-config.js"></script>
     </body>
 </html>
