@@ -1,75 +1,85 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <title>Join the Experts - EnergyConsult</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            color: #ffffff;
-            background-color: #1b1f22;
-        }
+    <head>
+        <title>Join - EnergyConsult</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    </head>
+    <body class="is-preload">
+        <div id="wrapper">
+            <header id="header">
+                <div class="logo">
+                    <span class="icon fa-gem"></span>
+                </div>
+                <div class="content">
+                    <div class="inner">
+                        <h1>Join EnergyConsult</h1>
+                        <p>Start showcasing your expertise to potential clients.</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="intro.html">Intro</a></li>
+                        <li><a href="experts.html">Experts</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="main">
+                <article>
+                    <h2 class="major">Expert Profile</h2>
+                    <form id="expertForm" method="post">
+                        <div class="fields">
+                            <div class="field">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" required />
+                            </div>
+                            <div class="field">
+                                <label for="specialization">Specialization</label>
+                                <input type="text" id="specialization" placeholder="e.g., Reservoir Engineering" required />
+                            </div>
+                            <div class="field">
+                                <label for="experience">Experience</label>
+                                <textarea id="experience" rows="3" required></textarea>
+                            </div>
+                            <div class="field">
+                                <label for="keySkills">Key Skills</label>
+                                <input type="text" id="keySkills" placeholder="e.g., Well Testing, Simulation" required />
+                            </div>
+                            <div class="field">
+                                <label for="certifications">Certifications</label>
+                                <input type="text" id="certifications" placeholder="e.g., PMP, PE" required />
+                            </div>
+                            <div class="field">
+                                <label for="projects">Notable Projects</label>
+                                <textarea id="projects" rows="3" required></textarea>
+                            </div>
+                        </div>
+                        <ul class="actions">
+                            <li><input type="submit" value="Submit Profile" class="primary" /></li>
+                            <li><input type="reset" value="Reset" /></li>
+                        </ul>
+                    </form>
+                </article>
+            </div>
+            <footer id="footer">
+                <p class="copyright">&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+            </footer>
+        </div>
+        <div id="bg"></div>
 
-        .form-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
+        <!-- Template Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
 
-        h1, p {
-            text-align: center;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #ffffff;
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #1b1f22;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        button:hover {
-            background-color: #2a2f33;
-        }
-    </style>
-</head>
-<body>
-    <div class="form-container">
-        <h1>Join EnergyConsult</h1>
-        <p>Start showcasing your expertise to potential clients.</p>
-        <form action="submit-expert.html" method="post">
-            <input type="text" name="name" placeholder="Your Full Name" required>
-            <input type="text" name="specialization" placeholder="Specialization (e.g., Reservoir Engineering)" required>
-            <textarea name="experience" placeholder="Briefly describe your experience" rows="4" required></textarea>
-            <input type="text" name="skills" placeholder="Key Skills (e.g., Well Testing, Simulation)">
-            <input type="text" name="certifications" placeholder="Certifications (e.g., PMP, PE)">
-            <textarea name="projects" placeholder="Highlight notable projects or achievements" rows="4"></textarea>
-            <button type="submit">Submit Profile</button>
-        </form>
-    </div>
-</body>
+        <!-- Firebase Setup -->
+        <script type="module" src="assets/js/firebase-config.js"></script>
+    </body>
 </html>
-
