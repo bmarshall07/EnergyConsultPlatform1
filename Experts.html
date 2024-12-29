@@ -5,30 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <style>
-        /* Add styles to format expert cards */
-        .expert-card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin: 10px;
-            padding: 15px;
-            background: #f9f9f9;
-        }
-        .expert-header {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .expert-info p {
-            margin: 5px 0;
-        }
-    </style>
     <script type="module">
         // Import Firebase functions
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
-        // Your Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
             authDomain: "energyconsult-7a837.firebaseapp.com",
@@ -44,7 +26,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Fetch data from the 'experts' node
+        // Load experts dynamically from Firebase
         document.addEventListener("DOMContentLoaded", () => {
             const expertsContainer = document.getElementById("experts-container");
             const expertsRef = ref(db, "experts");
@@ -58,17 +40,15 @@
 
                     // Create expert card
                     const expertCard = document.createElement("div");
-                    expertCard.className = "expert-card";
+                    expertCard.className = "expert";
 
                     expertCard.innerHTML = `
-                        <div class="expert-header">${expert.fullName}</div>
-                        <div class="expert-info">
-                            <p><strong>Specialization:</strong> ${expert.specialization}</p>
-                            <p><strong>Experience:</strong> ${expert.experience}</p>
-                            <p><strong>Key Skills:</strong> ${expert.keySkills}</p>
-                            <p><strong>Certifications:</strong> ${expert.certifications}</p>
-                            <p><strong>Projects:</strong> ${expert.projects}</p>
-                        </div>
+                        <h3>${expert.fullName}</h3>
+                        <p><strong>Specialization:</strong> ${expert.specialization}</p>
+                        <p><strong>Experience:</strong> ${expert.experience}</p>
+                        <p><strong>Key Skills:</strong> ${expert.keySkills}</p>
+                        <p><strong>Certifications:</strong> ${expert.certifications}</p>
+                        <p><strong>Projects:</strong> ${expert.projects}</p>
                     `;
 
                     expertsContainer.appendChild(expertCard);
@@ -83,7 +63,7 @@
             <div class="content">
                 <h1>Our Experts</h1>
                 <p>Connect with top energy consulting professionals</p>
-                <a href="join.html" class="join-button">Join the Experts</a>
+                <a href="join.html" class="button primary">Join the Experts</a>
             </div>
             <nav>
                 <ul>
@@ -97,10 +77,14 @@
         </header>
 
         <main>
-            <article id="experts">
-                <div id="experts-container">
+            <article id="main">
+                <header>
+                    <h2>Meet Our Experts</h2>
+                    <p>Below is a list of experienced professionals available for consultation.</p>
+                </header>
+                <section id="experts-container">
                     <!-- Expert profiles will be dynamically loaded here -->
-                </div>
+                </section>
             </article>
         </main>
 
@@ -110,3 +94,4 @@
     </div>
 </body>
 </html>
+
