@@ -3,40 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experts</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Our Experts</title>
+    <!-- Link to the main stylesheet -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Additional styling that inherits main.css settings */
+        .experts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+            gap: 20px;
+            margin: 20px auto;
+            padding: 0 10px;
+        }
+        .expert-card {
+            background-color: var(--card-bg-color); /* Use variable from main.css */
+            border: 1px solid var(--border-color); /* Consistent border color */
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .expert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover); /* Match hover shadow style */
+        }
+        .expert-card h2 {
+            color: var(--primary-text-color); /* Consistent text color */
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .expert-card p {
+            color: var(--secondary-text-color); /* Match secondary text color */
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: var(--button-bg-color); /* Use button style */
+            color: var(--button-text-color); /* Match text color for buttons */
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: var(--button-border-radius);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: var(--button-hover-bg-color);
+            color: var(--button-hover-text-color);
+        }
+    </style>
 </head>
 <body>
+    <!-- Page Header -->
     <header>
-        <h1 class="page-title">Our Experts</h1>
-        <p class="subtitle">Discover experienced professionals ready to collaborate on your projects.</p>
+        <h1>Our Experts</h1>
     </header>
 
+    <!-- Main Content -->
     <main>
-        <section class="experts-list">
-            <div class="expert-card">
-                <h2 class="expert-name">John Doe</h2>
-                <p class="expert-description">Specialist in reservoir modeling and simulation with 15 years of experience.</p>
-            </div>
-
-            <div class="expert-card">
-                <h2 class="expert-name">Jane Smith</h2>
-                <p class="expert-description">Expert in geosciences and subsurface mapping, delivering top-notch results.</p>
-            </div>
-
-            <div class="expert-card">
-                <h2 class="expert-name">Ali Khan</h2>
-                <p class="expert-description">Production engineering consultant with a focus on optimizing workflows.</p>
-            </div>
-        </section>
-
-        <div class="join-experts-container">
-            <a href="join.html" class="join-experts-button">Join the Experts</a>
+        <div id="experts-list" class="experts-container"></div>
+        <div class="button-container">
+            <a href="join.html" class="btn">Join the Experts</a>
         </div>
     </main>
 
+    <!-- Page Footer -->
     <footer>
-        <p>&copy; 2024 Your Consulting Platform</p>
+        <p>&copy; 2024 Energy Consult Platform</p>
     </footer>
+
+    <!-- Firebase and JavaScript to fetch and display expert data -->
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
+            authDomain: "energyconsult-7a837.firebaseapp.com",
+            databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "energyconsult-7a837",
+            storageBucket: "energyconsult-7a837.appspot.com",
+            messagingSenderId: "131060027292",
+            appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
+            measurementId: "G-FT6CQTN0P2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Reference to "experts" in the database
+        const expertsRef = ref(database, 'experts');
+
+        // Function to fetch and display experts
+        onValue(expertsRef, (snapshot) => {
+            const expertsContainer = document.getElementById('experts-list');
+            expertsContainer.innerHTML = ''; // Clear previous content
+
+            const experts = snapshot.val();
+            for (const key in experts) {
+                if (experts.hasOwnProperty(key)) {
+                    const expert = experts[key];
+
+                    // Create an expert card
+                    const expertCard = document.createElement('div');
+                    expertCard.className = 'expert-card';
+
+                    // Populate expert card with data
+                    expertCard.innerHTML = `
+                        <h2>${expert.fullName || 'N/A'}</h2>
+                        <p><strong>Expertise:</strong> ${expert.specialization || 'N/A'}</p>
+                        <p><strong>Email:</strong> ${expert.email || 'N/A'}</p>
+                        <p><strong>Experience:</strong> ${expert.experience || 'N/A'}</p>
+                        <p><strong>Certifications:</strong> ${expert.certifications || 'N/A'}</p>
+                        <p><strong>Key Skills:</strong> ${expert.keySkills || 'N/A'}</p>
+                        <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
+                    `;
+
+                    // Add expert card to container
+                    expertsContainer.appendChild(expertCard);
+                }
+            }
+        }, (error) => {
+            console.error('Error fetching data:', error);
+        });
+    </script>
 </body>
 </html>
+
