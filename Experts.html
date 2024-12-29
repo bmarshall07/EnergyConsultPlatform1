@@ -1,229 +1,115 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Experts - EnergyConsult</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experts</title>
+    <script type="module">
+        // Import the Firebase SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
+            authDomain: "energyconsult-7a837.firebaseapp.com",
+            databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "energyconsult-7a837",
+            storageBucket: "energyconsult-7a837.appspot.com",
+            messagingSenderId: "131060027292",
+            appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
+            measurementId: "G-FT6CQTN0P2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Reference to the "experts" data in the Firebase Realtime Database
+        const expertsRef = ref(database, 'experts');
+
+        // Function to fetch and display expert data
+        const loadExperts = () => {
+            const expertsContainer = document.getElementById('experts-container');
+            onValue(expertsRef, (snapshot) => {
+                expertsContainer.innerHTML = ''; // Clear existing data
+                const data = snapshot.val();
+                if (data) {
+                    Object.keys(data).forEach((key) => {
+                        const expert = data[key];
+                        // Create HTML elements for each expert
+                        const expertCard = document.createElement('div');
+                        expertCard.className = 'expert-card';
+                        expertCard.innerHTML = `
+                            <h3>${expert.name}</h3>
+                            <p><strong>Expertise:</strong> ${expert.expertise}</p>
+                            <p><strong>Email:</strong> ${expert.email}</p>
+                        `;
+                        expertsContainer.appendChild(expertCard);
+                    });
+                } else {
+                    expertsContainer.innerHTML = '<p>No experts found.</p>';
+                }
+            });
+        };
+
+        // Load experts on page load
+        window.addEventListener('load', loadExperts);
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: #ffffff;
-            background-color: #1b1f22;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
-
-        .content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .join-button {
-            display: inline-block;
-            background: #1b1f22; /* Same color as background */
-            color: #ffffff;
-            padding: 10px 20px;
-            text-align: center;
-            border-radius: 5px;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-            border: 1px solid #ffffff; /* Border to make it visible */
-        }
-
-        .join-button:hover {
-            background: #1b1f22; /* Keep same on hover */
-            border-color: #45a049; /* Green border on hover */
-        }
-
-        .search-bar {
-            margin-bottom: 30px; /* Adjust spacing below the search bar */
-            text-align: center;
-        }
-
-        .search-bar input {
-            width: 100%;
-            max-width: 700px; /* Limiting input width for better alignment */
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            color: #fff;
-            margin-top: 30px; /* Added space between search box and navigation */
-        }
-
-        .search-bar input:focus {
-            border-color: #ffffff;
-            outline: none;
-        }
-
-        .expert-card {
-            background-color: #2d3436; /* Darker card background */
-            border: 1px solid #ffffff; /* Thin border around profiles */
-            border-radius: 8px;
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 320px; /* Adjust width to match the header's layout */
-            margin-left: auto;
-            margin-right: auto;
-            transition: border-color 0.3s ease;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        .expert-card:hover {
-            border-color: #45a049; /* Green border on hover */
+        .expert-card {
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
         }
-
-        .expert-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%; /* Circular avatar */
-            background-color: #ccc; /* Placeholder background color */
-            margin-bottom: 20px;
-            object-fit: cover; /* Ensures image covers the circular shape */
+        .expert-card h3 {
+            margin: 0 0 10px;
         }
-
-        .expert-header {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .expert-info {
-            text-align: left;
-            width: 100%;
-            color: #ddd;
-            margin-bottom: 15px;
-        }
-
-        .expert-info p {
+        .expert-card p {
             margin: 5px 0;
         }
-
-        .expert-info strong {
-            color: #fff;
-        }
-
-        .expert-skills,
-        .expert-projects,
-        .expert-testimonials {
+        .button-container {
+            text-align: center;
             margin-top: 20px;
-            padding: 10px;
-            background-color: #34495e;
-            border-radius: 4px;
-            width: 100%;
         }
-
-        .expert-skills span,
-        .expert-projects span,
-        .expert-testimonials span {
+        .button-container a {
             display: inline-block;
-            margin: 5px;
-            padding: 5px 10px;
-            background-color: #45a049;
-            border-radius: 20px;
+            padding: 10px 15px;
             color: #fff;
-            font-size: 0.9em;
+            background: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
         }
-
-        .expert-projects p,
-        .expert-testimonials p {
-            color: #ddd;
-        }
-
-        @media screen and (max-width: 768px) {
-            .expert-card {
-                max-width: 100%; /* Ensure cards fit on smaller screens */
-                margin-bottom: 20px;
-            }
+        .button-container a:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div id="wrapper">
-        <header id="header">
-            <div class="content">
-                <h1>Our Experts</h1>
-                <p>Connect with top energy consulting professionals</p>
-                <a href="join.html" class="join-button">Join the Experts</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="intro.html">Intro</a></li>
-                    <li><a href="experts.html">Experts</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <main>
-            <article id="experts">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search for experts, skills, or domains..." />
-                </div>
-
-                <!-- Example Expert 1 -->
-                <div class="expert-card">
-                    <img src="https://via.placeholder.com/100" alt="John Doe" class="expert-avatar" />
-                    <div class="expert-header">John Doe</div>
-                    <div class="expert-info">
-                        <p><strong>Specialization:</strong> Reservoir Engineering</p>
-                        <p><strong>Experience:</strong> 10+ years in offshore field development</p>
-                        <p><strong>Certifications:</strong> SPE Certified, EOR Specialist</p>
-                    </div>
-                    <div class="expert-skills">
-                        <strong>Skills:</strong>
-                        <span>EOR</span>
-                        <span>Well Testing</span>
-                        <span>Simulation</span>
-                    </div>
-                    <div class="expert-projects">
-                        <strong>Past Projects:</strong>
-                        <p>Offshore field development for XYZ Corp. Resulted in 25% increase in recovery factor.</p>
-                    </div>
-                    <div class="expert-testimonials">
-                        <strong>Client Testimonials:</strong>
-                        <p>"John's expertise in reservoir engineering significantly improved our field development strategy." – ABC Energy</p>
-                    </div>
-                </div>
-
-                <!-- Example Expert 2 -->
-                <div class="expert-card">
-                    <img src="https://via.placeholder.com/100" alt="Jane Smith" class="expert-avatar" />
-                    <div class="expert-header">Jane Smith</div>
-                    <div class="expert-info">
-                        <p><strong>Specialization:</strong> Seismic Interpretation</p>
-                        <p><strong>Experience:</strong> 8+ years in exploration projects</p>
-                        <p><strong>Certifications:</strong> Certified Seismic Interpreter</p>
-                    </div>
-                    <div class="expert-skills">
-                        <strong>Skills:</strong>
-                        <span>Basin Analysis</span>
-                        <span>3D Modeling</span>
-                        <span>Geophysical Analysis</span>
-                    </div>
-                    <div class="expert-projects">
-                        <strong>Past Projects:</strong>
-                        <p>Lead seismic interpretation for exploration in the North Sea, discovering a new prospect with 30% potential reserves increase.</p>
-                    </div>
-                    <div class="expert-testimonials">
-                        <strong>Client Testimonials:</strong>
-                        <p>"Jane's seismic analysis was key to uncovering hidden reserves. She is an asset to any team." – DEF Geophysics</p>
-                    </div>
-                </div>
-            </article>
-        </main>
-
-        <footer id="footer">
-            <p>&copy; EnergyConsult. Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
-        </footer>
+    <div class="container">
+        <h1>Our Experts</h1>
+        <div id="experts-container">
+            <p>Loading experts...</p>
+        </div>
+        <div class="button-container">
+            <a href="join-experts.html">Join the Experts</a>
+        </div>
     </div>
 </body>
 </html>
