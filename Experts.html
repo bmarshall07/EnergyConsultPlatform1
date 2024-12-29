@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Experts</title>
-    <link rel="stylesheet" href="assets/css/main.css"> <!-- Updated to match the correct stylesheet path -->
+    <!-- Link to your stylesheet -->
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+    <!-- Page Header -->
     <header>
         <h1>Our Experts</h1>
     </header>
+
+    <!-- Main Content -->
     <main>
         <div id="experts-list" class="experts-container"></div>
         <div class="button-container">
             <a href="join.html" class="btn">Join the Experts</a>
         </div>
     </main>
+
+    <!-- Page Footer -->
     <footer>
         <p>&copy; 2024 Energy Consult Platform</p>
     </footer>
+
+    <!-- Firebase and JavaScript to fetch and display expert data -->
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
@@ -53,9 +61,11 @@
                 if (experts.hasOwnProperty(key)) {
                     const expert = experts[key];
 
+                    // Create an expert card
                     const expertCard = document.createElement('div');
                     expertCard.className = 'expert-card';
 
+                    // Populate expert card with data
                     expertCard.innerHTML = `
                         <h2>${expert.fullName || 'N/A'}</h2>
                         <p><strong>Expertise:</strong> ${expert.specialization || 'N/A'}</p>
@@ -66,6 +76,7 @@
                         <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
                     `;
 
+                    // Add expert card to container
                     expertsContainer.appendChild(expertCard);
                 }
             }
@@ -75,3 +86,4 @@
     </script>
 </body>
 </html>
+
