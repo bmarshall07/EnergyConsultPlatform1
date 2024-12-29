@@ -4,75 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Experts</title>
-    <!-- Link to the stylesheet -->
+    <!-- Link to the main stylesheet -->
     <link rel="stylesheet" href="assets/css/main.css">
     <style>
-        /* Additional styling for the Experts page */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9; /* Light background for contrast */
-        }
-        header {
-            background-color: #004080; /* Dark blue consistent with a professional theme */
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        main {
-            padding: 20px;
-        }
+        /* Additional styling that inherits main.css settings */
         .experts-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
             gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            margin: 20px auto;
+            padding: 0 10px;
         }
         .expert-card {
-            background-color: white;
-            border: 1px solid #ddd;
+            background-color: var(--card-bg-color); /* Use variable from main.css */
+            border: 1px solid var(--border-color); /* Consistent border color */
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            text-align: left;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .expert-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--box-shadow-hover); /* Match hover shadow style */
         }
         .expert-card h2 {
-            font-size: 1.5em;
-            color: #004080;
+            color: var(--primary-text-color); /* Consistent text color */
+            font-size: 1.4rem;
             margin-bottom: 10px;
         }
         .expert-card p {
+            color: var(--secondary-text-color); /* Match secondary text color */
             margin: 8px 0;
-            color: #555;
+            font-size: 0.9rem;
         }
         .button-container {
             text-align: center;
             margin-top: 20px;
         }
         .btn {
-            background-color: #004080;
-            color: white;
+            background-color: var(--button-bg-color); /* Use button style */
+            color: var(--button-text-color); /* Match text color for buttons */
             padding: 10px 20px;
             text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
+            border-radius: var(--button-border-radius);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .btn:hover {
-            background-color: #0059b3; /* Slightly lighter blue for hover */
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #004080;
-            color: white;
-            margin-top: 20px;
+            background-color: var(--button-hover-bg-color);
+            color: var(--button-hover-text-color);
         }
     </style>
 </head>
