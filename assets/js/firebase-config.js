@@ -1,9 +1,4 @@
-// Import the functions you need from the Firebase SDKs
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set } from "firebase/database";
-
-// Firebase configuration object
+// Remove the import lines and just use these
 const firebaseConfig = {
     apiKey: "AIzaSyB5yIyAh89fbbXaTIV3G8RIuU58XUe1q3E",
     authDomain: "energyconsult-7a837.firebaseapp.com",
@@ -16,11 +11,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const app = firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-// Initialize the Realtime Database
-const database = getDatabase(app);
-
-// Export database functions for use in other files
-export { database, ref, set };
+// Export for other files
+export { database };
