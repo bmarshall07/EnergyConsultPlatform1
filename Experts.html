@@ -1,14 +1,13 @@
-<<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Experts</title>
     <link rel="stylesheet" href="assets/css/main.css" />
-    
+
     <!-- Use Firebase Modular SDK with type="module" -->
     <script type="module">
-        // Import Firebase SDK modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
@@ -34,25 +33,13 @@
             const expertsContainer = document.getElementById('experts-list');
             const experts = snapshot.val();
 
-            // Clear any previous content
-            expertsContainer.innerHTML = '';
+            expertsContainer.innerHTML = ''; // Clear previous content
 
-            // If data exists in Firebase
             if (experts) {
                 Object.values(experts).forEach(expert => {
-                    // Creating a card for each expert
                     const expertCard = document.createElement('div');
                     expertCard.className = 'expert-card';
 
-                    // Add styles to the card to make sure it's visible
-                    expertCard.style.border = '2px solid #ddd';
-                    expertCard.style.padding = '15px';
-                    expertCard.style.marginBottom = '15px';
-                    expertCard.style.backgroundColor = '#f4f4f4';
-                    expertCard.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-                    expertCard.style.fontFamily = 'Arial, sans-serif';
-
-                    // Set inner HTML of the expert card
                     expertCard.innerHTML = `
                         <h3>${expert.fullName}</h3>
                         <p><strong>Specialization:</strong> ${expert.specialization}</p>
@@ -62,24 +49,21 @@
                         <p><strong>Projects:</strong> ${expert.projects}</p>
                     `;
 
-                    // Append the card to the experts container
                     expertsContainer.appendChild(expertCard);
                 });
             } else {
-                expertsContainer.innerHTML = '<p>No experts available.</p>';
+                expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
             }
         });
 
-        // Search functionality for filtering experts
+        // Search functionality
         document.getElementById('searchInput').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const cards = document.querySelectorAll('.expert-card');
 
             cards.forEach(card => {
                 const name = card.querySelector('h3').textContent.toLowerCase();
-                const specialization = card.querySelector('p').textContent.toLowerCase();
-                
-                if (name.includes(searchTerm) || specialization.includes(searchTerm)) {
+                if (name.includes(searchTerm)) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
@@ -87,6 +71,88 @@
             });
         });
     </script>
+
+    <style>
+        /* General styles */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            color: #ffcc00;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin-top: 10px;
+            background-color: #333;
+            border: 1px solid #555;
+            color: #fff;
+        }
+        #experts-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .expert-card {
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        .expert-card:hover {
+            transform: translateY(-5px);
+        }
+        .expert-card h3 {
+            font-size: 1.5rem;
+            color: #ffcc00;
+        }
+        .expert-card p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+        }
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+        #join-experts {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #ffcc00;
+            color: #121212;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #join-experts:hover {
+            background-color: #ffb700;
+        }
+    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -97,11 +163,12 @@
 
         <div id="experts-list"></div>
 
+        <!-- Join the Experts Button -->
+        <a href="join.html" id="join-experts">Join the Experts</a>
+
         <footer>
             <p>&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
         </footer>
     </div>
 </body>
 </html>
-
-
