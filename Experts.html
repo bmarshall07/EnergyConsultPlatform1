@@ -35,6 +35,7 @@
             <!-- Experts Grid -->
             <section class="experts-grid" id="experts-list">
                 <!-- Expert cards will be dynamically inserted here -->
+                <div id="expertCards"></div> <!-- Added this div to hold profile cards -->
             </section>
 
             <!-- Join Button -->
@@ -93,7 +94,7 @@
 
         // Populate experts list
         onValue(expertsRef, (snapshot) => {
-            const expertsContainer = document.getElementById('experts-list');
+            const expertsContainer = document.getElementById('expertCards');  // Updated this line to target new div
             const experts = snapshot.val();
 
             if (experts) {
@@ -148,5 +149,13 @@
         }
 
         .expert-card {
-            background:
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</body>
+</html>
+
 
