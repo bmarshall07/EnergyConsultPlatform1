@@ -4,71 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Experts</title>
-    <!-- Link to the main stylesheet -->
     <link rel="stylesheet" href="assets/css/main.css">
     <style>
-        /* Additional styling that inherits main.css settings */
+        /* Additional styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 30px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .subheader {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Experts container grid */
         .experts-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin: 20px auto;
             padding: 0 10px;
         }
+
+        /* Individual expert card */
         .expert-card {
-            background-color: var(--card-bg-color); /* Use variable from main.css */
-            border: 1px solid var(--border-color); /* Consistent border color */
-            border-radius: 12px; /* More rounded corners */
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
             padding: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the card */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
-            z-index: 1; /* Ensure cards appear above any background elements */
         }
+
         .expert-card:hover {
-            transform: translateY(-10px); /* Slightly stronger hover effect */
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
-        .expert-card::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            z-index: -1;
-        }
+
         .expert-card h2 {
-            color: var(--primary-text-color); /* Consistent text color */
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin-bottom: 15px;
-            text-align: center; /* Centered header for better balance */
-            font-weight: bold; /* Bold title for clarity */
+            color: #333;
+            text-align: center;
         }
+
         .expert-card p {
-            color: var(--secondary-text-color); /* Match secondary text color */
-            margin: 10px 0;
+            color: #555;
+            margin: 8px 0;
             font-size: 1rem;
-            line-height: 1.6;
         }
+
+        .expert-card p strong {
+            color: #333;
+        }
+
+        /* Button container */
         .button-container {
             text-align: center;
             margin-top: 30px;
         }
+
         .btn {
-            background-color: var(--button-bg-color); /* Use button style */
-            color: var(--button-text-color); /* Match text color for buttons */
+            background-color: #007bff;
+            color: white;
             padding: 12px 25px;
             text-decoration: none;
-            border-radius: var(--button-border-radius);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
             font-size: 1.1rem;
         }
+
         .btn:hover {
-            background-color: var(--button-hover-bg-color);
-            color: var(--button-hover-text-color);
+            background-color: #0056b3;
+        }
+
+        /* Search Box */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .search-box {
+            width: 80%;
+            max-width: 500px;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: border 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #007bff;
+            outline: none;
         }
     </style>
 </head>
@@ -76,7 +116,13 @@
     <!-- Page Header -->
     <header>
         <h1>Our Experts</h1>
+        <p class="subheader">Browse skilled consultants in reservoir engineering, geosciences, and more.</p>
     </header>
+
+    <!-- Search Box -->
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="Search for experts...">
+    </div>
 
     <!-- Main Content -->
     <main>
@@ -119,9 +165,9 @@
         // Function to fetch and display experts
         onValue(expertsRef, (snapshot) => {
             const expertsContainer = document.getElementById('experts-list');
+            const experts = snapshot.val();
             expertsContainer.innerHTML = ''; // Clear previous content
 
-            const experts = snapshot.val();
             for (const key in experts) {
                 if (experts.hasOwnProperty(key)) {
                     const expert = experts[key];
@@ -147,6 +193,22 @@
             }
         }, (error) => {
             console.error('Error fetching data:', error);
+        });
+
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.expert-card');
+
+            cards.forEach(card => {
+                const name = card.querySelector('h2').textContent.toLowerCase();
+                const expertise = card.querySelector('p').textContent.toLowerCase();
+                if (name.includes(searchTerm) || expertise.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
