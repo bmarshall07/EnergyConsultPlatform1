@@ -1,75 +1,28 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Experts</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js"></script>
 </head>
-<body class="is-preload">
+<body>
     <div id="wrapper">
-        <!-- Header -->
-        <header id="header">
-            <div class="logo">
-                <span class="icon fa-users"></span>
-            </div>
-            <div class="content">
-                <div class="inner">
-                    <h1>Our Experts</h1>
-                    <p>Browse skilled consultants in reservoir engineering, geosciences, and more.</p>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="intro.html">Intro</a></li>
-                    <li><a href="experts.html">Experts</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                </ul>
-            </nav>
+        <header>
+            <h1>Our Experts</h1>
+            <input type="text" id="searchInput" placeholder="Search experts...">
         </header>
 
-        <!-- Main -->
-        <div id="main">
-            <article>
-                <h2 class="major">Experts</h2>
-                <!-- Search Bar -->
-                <div class="search-container">
-                    <input type="text" id="searchInput" class="search-box" placeholder="Search for experts...">
-                </div>
+        <div id="experts-list"></div>
 
-                <!-- Experts List -->
-                <div id="experts-list" class="experts-container"></div>
-
-                <!-- Button to Join -->
-                <div class="button-container">
-                    <a href="join.html" class="button">Join the Experts</a>
-                </div>
-            </article>
-        </div>
-
-        <!-- Footer -->
-        <footer id="footer">
-            <p class="copyright">&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+        <footer>
+            <p>&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
         </footer>
     </div>
-    <div id="bg"></div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-
-    <!-- Firebase and JavaScript to fetch and display expert data -->
     <script type="module">
-        // Import Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
-
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
@@ -83,71 +36,62 @@
         };
 
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database(app);
 
-        // Reference to "experts" in the database
-        const expertsRef = ref(database, 'experts');
+        const expertsRef = database.ref('experts');
 
-        // Function to fetch and display experts
-        onValue(expertsRef, (snapshot) => {
+        // Fetching expert data from Firebase
+        expertsRef.on('value', (snapshot) => {
             const expertsContainer = document.getElementById('experts-list');
             const experts = snapshot.val();
-            
-            // Log the data to see if it's fetched properly
-            console.log("Firebase Data: ", experts);
 
-            // Clear previous content
+            // Clear any previous content
             expertsContainer.innerHTML = '';
 
-            // Check if there are experts in the database
+            // If data exists in Firebase
             if (experts) {
-                for (const key in experts) {
-                    if (experts.hasOwnProperty(key)) {
-                        const expert = experts[key];
+                Object.values(experts).forEach(expert => {
+                    // Creating a card for each expert
+                    const expertCard = document.createElement('div');
+                    expertCard.className = 'expert-card';
 
-                        // Debugging: log each expert data
-                        console.log("Expert Data: ", expert);
+                    // Add styles to the card to make sure it's visible
+                    expertCard.style.border = '2px solid #ddd';
+                    expertCard.style.padding = '15px';
+                    expertCard.style.marginBottom = '15px';
+                    expertCard.style.backgroundColor = '#f4f4f4';
+                    expertCard.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+                    expertCard.style.fontFamily = 'Arial, sans-serif';
 
-                        // Create an expert card
-                        const expertCard = document.createElement('div');
-                        expertCard.className = 'expert-card';
-                        expertCard.style.border = '1px solid #ccc';  // Add border to see cards
-                        expertCard.style.padding = '15px';  // Add some padding
-                        expertCard.style.marginBottom = '10px';  // Space between cards
-                        expertCard.style.backgroundColor = '#f9f9f9';  // Background color
+                    // Set inner HTML of the expert card
+                    expertCard.innerHTML = `
+                        <h3>${expert.fullName}</h3>
+                        <p><strong>Specialization:</strong> ${expert.specialization}</p>
+                        <p><strong>Experience:</strong> ${expert.experience}</p>
+                        <p><strong>Certifications:</strong> ${expert.certifications}</p>
+                        <p><strong>Key Skills:</strong> ${expert.keySkills}</p>
+                        <p><strong>Projects:</strong> ${expert.projects}</p>
+                    `;
 
-                        // Populate expert card with data
-                        expertCard.innerHTML = `
-                            <h3>${expert.fullName || 'N/A'}</h3>
-                            <p><strong>Expertise:</strong> ${expert.specialization || 'N/A'}</p>
-                            <p><strong>Email:</strong> ${expert.email || 'N/A'}</p>
-                            <p><strong>Experience:</strong> ${expert.experience || 'N/A'}</p>
-                            <p><strong>Certifications:</strong> ${expert.certifications || 'N/A'}</p>
-                            <p><strong>Key Skills:</strong> ${expert.keySkills || 'N/A'}</p>
-                            <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
-                        `;
-
-                        // Add expert card to container
-                        expertsContainer.appendChild(expertCard);
-                    }
-                }
+                    // Append the card to the experts container
+                    expertsContainer.appendChild(expertCard);
+                });
             } else {
                 expertsContainer.innerHTML = '<p>No experts available.</p>';
             }
-        }, (error) => {
-            console.error('Error fetching data:', error);
         });
 
-        // Search Functionality
+        // Search functionality for filtering experts
         document.getElementById('searchInput').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const cards = document.querySelectorAll('.expert-card');
 
             cards.forEach(card => {
                 const name = card.querySelector('h3').textContent.toLowerCase();
-                const expertise = card.querySelector('p').textContent.toLowerCase();
-                if (name.includes(searchTerm) || expertise.includes(searchTerm)) {
+                const specialization = card.querySelector('p').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || specialization.includes(searchTerm)) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
