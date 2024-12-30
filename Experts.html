@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<<!DOCTYPE HTML>
 <html>
 <head>
     <title>Our Experts</title>
@@ -95,7 +95,7 @@
             const experts = snapshot.val();
             
             // Log the data to see if it's fetched properly
-            console.log(experts);
+            console.log("Firebase Data: ", experts);
 
             // Clear previous content
             expertsContainer.innerHTML = '';
@@ -105,6 +105,9 @@
                 for (const key in experts) {
                     if (experts.hasOwnProperty(key)) {
                         const expert = experts[key];
+
+                        // Debugging: log each expert data
+                        console.log("Expert Data: ", expert);
 
                         // Create an expert card
                         const expertCard = document.createElement('div');
