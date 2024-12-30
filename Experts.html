@@ -82,7 +82,7 @@
                 <article class="expert-card">
                     <h3>${expert.fullName}</h3>
                     <p><strong>Specialization:</strong> ${expert.specialization}</p>
-                    <p><strong>Email:</strong> ${expert.email}</p>
+                    <p><strong>Email:</strong> ${expert.email || 'Not provided'}</p>
                     <p><strong>Experience:</strong> ${expert.experience}</p>
                     <p><strong>Certifications:</strong> ${expert.certifications}</p>
                     <p><strong>Skills:</strong> ${expert.keySkills}</p>
@@ -175,4 +175,3 @@
     </style>
 </body>
 </html>
-
