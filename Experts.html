@@ -1,174 +1,97 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Experts</title>
-    <link rel="stylesheet" href="assets/css/main.css" />
+/ experts.js
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { app } from './firebase-config.js';
 
-    <!-- Use Firebase Modular SDK with type="module" -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+const database = getDatabase(app);
+const expertsRef = ref(database, 'experts');
+const expertsContainer = document.getElementById('experts-list');
+const searchInput = document.getElementById('searchInput');
 
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
-            authDomain: "energyconsult-7a837.firebaseapp.com",
-            databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "energyconsult-7a837",
-            storageBucket: "energyconsult-7a837.appspot.com",
-            messagingSenderId: "131060027292",
-            appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
-            measurementId: "G-FT6CQTN0P2"
+// Debounce function for search
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
         };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const expertsRef = ref(database, 'experts');
+// Display loading state
+function showLoading() {
+    expertsContainer.innerHTML = '<div class="loading">Loading experts...</div>';
+}
 
-        // Fetching expert data from Firebase
+// Display error state
+function showError(message) {
+    expertsContainer.innerHTML = `<div class="error">Error: ${message}</div>`;
+}
+
+// Create expert card HTML
+function createExpertCard(expert) {
+    return `
+        <div class="expert-card">
+            <h3>${expert.fullName}</h3>
+            <p><strong>Specialization:</strong> ${expert.specialization}</p>
+            <p><strong>Experience:</strong> ${expert.experience}</p>
+            <p><strong>Certifications:</strong> ${expert.certifications}</p>
+            <p><strong>Key Skills:</strong> ${expert.keySkills}</p>
+            <p><strong>Projects:</strong> ${expert.projects}</p>
+        </div>
+    `;
+}
+
+// Filter experts based on search term
+function filterExperts(experts, searchTerm) {
+    return Object.values(experts).filter(expert => {
+        const searchFields = [
+            expert.fullName,
+            expert.specialization,
+            expert.keySkills
+        ].map(field => field.toLowerCase());
+        
+        return searchFields.some(field => field.includes(searchTerm));
+    });
+}
+
+// Initialize experts list
+function initExperts() {
+    showLoading();
+
+    onValue(expertsRef, (snapshot) => {
+        const experts = snapshot.val();
+        
+        if (experts) {
+            const expertsList = Object.values(experts)
+                .map(expert => createExpertCard(expert))
+                .join('');
+            expertsContainer.innerHTML = expertsList;
+        } else {
+            expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
+        }
+    }, (error) => {
+        showError('Failed to load experts. Please try again later.');
+        console.error('Firebase error:', error);
+    });
+
+    // Setup search with debouncing
+    searchInput.addEventListener('input', debounce(function() {
+        const searchTerm = this.value.toLowerCase();
+        
         onValue(expertsRef, (snapshot) => {
-            const expertsContainer = document.getElementById('experts-list');
             const experts = snapshot.val();
-
-            expertsContainer.innerHTML = ''; // Clear previous content
-
             if (experts) {
-                Object.values(experts).forEach(expert => {
-                    const expertCard = document.createElement('div');
-                    expertCard.className = 'expert-card';
-
-                    expertCard.innerHTML = `
-                        <h3>${expert.fullName}</h3>
-                        <p><strong>Specialization:</strong> ${expert.specialization}</p>
-                        <p><strong>Experience:</strong> ${expert.experience}</p>
-                        <p><strong>Certifications:</strong> ${expert.certifications}</p>
-                        <p><strong>Key Skills:</strong> ${expert.keySkills}</p>
-                        <p><strong>Projects:</strong> ${expert.projects}</p>
-                    `;
-
-                    expertsContainer.appendChild(expertCard);
-                });
-            } else {
-                expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
+                const filteredExperts = filterExperts(experts, searchTerm);
+                expertsContainer.innerHTML = filteredExperts.length > 0
+                    ? filteredExperts.map(expert => createExpertCard(expert)).join('')
+                    : '<p>No experts found matching your search.</p>';
             }
         });
+    }, 300));
+}
 
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.expert-card');
-
-            cards.forEach(card => {
-                const name = card.querySelector('h3').textContent.toLowerCase();
-                if (name.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
-
-    <style>
-        /* General styles */
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        #wrapper {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        header h1 {
-            font-size: 2.5rem;
-            color: #ffcc00;
-        }
-        #searchInput {
-            width: 100%;
-            padding: 10px;
-            font-size: 1rem;
-            margin-top: 10px;
-            background-color: #333;
-            border: 1px solid #555;
-            color: #fff;
-        }
-        #experts-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .expert-card {
-            background-color: #1f1f1f;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
-        }
-        .expert-card:hover {
-            transform: translateY(-5px);
-        }
-        .expert-card h3 {
-            font-size: 1.5rem;
-            color: #ffcc00;
-        }
-        .expert-card p {
-            margin: 5px 0;
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #777;
-        }
-        footer a {
-            color: #ffcc00;
-            text-decoration: none;
-        }
-        #join-experts {
-            display: block;
-            text-align: center;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            background-color: #ffcc00;
-            color: #121212;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        #join-experts:hover {
-            background-color: #ffb700;
-        }
-    </style>
-</head>
-<body>
-    <div id="wrapper">
-        <header>
-            <h1>Our Experts</h1>
-            <input type="text" id="searchInput" placeholder="Search experts...">
-        </header>
-
-        <div id="experts-list"></div>
-
-        <!-- Join the Experts Button -->
-        <a href="join.html" id="join-experts">Join the Experts</a>
-
-        <footer>
-            <p>&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-        </footer>
-    </div>
-</body>
-</html>
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initExperts);
