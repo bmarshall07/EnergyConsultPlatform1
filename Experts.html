@@ -18,35 +18,53 @@
         .expert-card {
             background-color: var(--card-bg-color); /* Use variable from main.css */
             border: 1px solid var(--border-color); /* Consistent border color */
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 12px; /* More rounded corners */
+            padding: 25px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the card */
+            position: relative;
+            z-index: 1; /* Ensure cards appear above any background elements */
         }
         .expert-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--box-shadow-hover); /* Match hover shadow style */
+            transform: translateY(-10px); /* Slightly stronger hover effect */
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+        }
+        .expert-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: -1;
         }
         .expert-card h2 {
             color: var(--primary-text-color); /* Consistent text color */
-            font-size: 1.4rem;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            text-align: center; /* Centered header for better balance */
+            font-weight: bold; /* Bold title for clarity */
         }
         .expert-card p {
             color: var(--secondary-text-color); /* Match secondary text color */
-            margin: 8px 0;
-            font-size: 0.9rem;
+            margin: 10px 0;
+            font-size: 1rem;
+            line-height: 1.6;
         }
         .button-container {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         .btn {
             background-color: var(--button-bg-color); /* Use button style */
             color: var(--button-text-color); /* Match text color for buttons */
-            padding: 10px 20px;
+            padding: 12px 25px;
             text-decoration: none;
             border-radius: var(--button-border-radius);
             transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 1.1rem;
         }
         .btn:hover {
             background-color: var(--button-hover-bg-color);
@@ -133,4 +151,3 @@
     </script>
 </body>
 </html>
-
