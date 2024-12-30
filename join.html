@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-    <title>Join Our Experts - EnergyConsult</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Join Our Experts - EnergyConsult</title>
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
@@ -14,7 +14,7 @@
             <h1>Join Our Expert Network</h1>
             <p>Please fill out the form below to join our network of experts.</p>
 
-            <form id="expertForm" action="submit_profile.php" method="POST">
+            <form id="expertForm">
                 <div class="fields">
                     <div class="field">
                         <label for="fullName">Full Name:</label>
@@ -54,16 +54,14 @@
 
     <!-- Footer (keep your existing footer) -->
 
-</body>
-</html>
-        <footer id="footer">
-            <p>&copy; EnergyConsult. Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
-        </footer>
-    </div>
+    <footer id="footer">
+        <p>&copy; EnergyConsult. Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
+    </footer>
 
-    <script>
-        // Test if page is loaded
-        console.log("Page loaded");
+    <!-- Firebase SDK (use the modular version) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
         // Firebase configuration
         const firebaseConfig = {
@@ -77,56 +75,46 @@
             measurementId: "G-FT6CQT0NP2"
         };
 
-        // Initialize Firebase with error handling
-        try {
-            firebase.initializeApp(firebaseConfig);
-            const database = firebase.database();
-            console.log("Firebase initialized successfully");
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-            // Add an event listener for the form submission
-            document.getElementById("expertForm").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent the page from reloading
-                console.log("Form submitted"); // Debug log
-                
-                // Capture form inputs
-                const formData = {
-                    fullName: document.getElementById("fullName").value,
-                    specialization: document.getElementById("specialization").value,
-                    experience: document.getElementById("experience").value,
-                    keySkills: document.getElementById("keySkills").value,
-                    certifications: document.getElementById("certifications").value,
-                    projects: document.getElementById("projects").value
-                };
+        // Form submission handling
+        document.getElementById("expertForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the page from reloading
 
-                // Validate that all fields are filled
-                if (Object.values(formData).some(value => !value)) {
-                    alert("Please fill out all fields!");
-                    return;
-                }
+            // Capture form inputs
+            const formData = {
+                fullName: document.getElementById("fullName").value,
+                email: document.getElementById("email").value,
+                specialization: document.getElementById("specialization").value,
+                experience: document.getElementById("experience").value,
+                certifications: document.getElementById("certifications").value,
+                keySkills: document.getElementById("keySkills").value,
+                projects: document.getElementById("projects").value
+            };
 
-                console.log('Attempting to save form data:', formData);
+            // Validate that all required fields are filled
+            if (Object.values(formData).some(value => !value)) {
+                alert("Please fill out all required fields!");
+                return;
+            }
 
-                // Generate a unique ID for each submission
-                const userId = Date.now();
+            // Generate a unique ID for each submission (based on timestamp)
+            const userId = Date.now();
 
-                // Write the data to the Firebase Realtime Database
-                database.ref(`experts/${userId}`).set(formData)
-                    .then(() => {
-                        console.log("Data saved successfully");
-                        alert("Profile submitted successfully!");
-                        document.getElementById("expertForm").reset(); // Clear the form
-                    })
-                    .catch((error) => {
-                        console.error("Error submitting profile:", error);
-                        alert("Error submitting profile: " + error.message);
-                    });
-            });
-
-        } catch (error) {
-            console.error("Error initializing Firebase:", error);
-            alert("Error connecting to database. Please try again later.");
-        }
+            // Write data to Firebase
+            set(ref(database, 'experts/' + userId), formData)
+                .then(() => {
+                    alert("Profile submitted successfully!");
+                    document.getElementById("expertForm").reset(); // Reset form after submission
+                })
+                .catch((error) => {
+                    alert("Error submitting profile: " + error.message);
+                });
+        });
     </script>
 </body>
 </html>
+
 
