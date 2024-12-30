@@ -1,29 +1,16 @@
-<!DOCTYPE HTML>
+<<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Experts</title>
     <link rel="stylesheet" href="assets/css/main.css" />
-    <!-- Firebase scripts with proper legacy format -->
-    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js"></script>
-</head>
-<body>
-    <div id="wrapper">
-        <header>
-            <h1>Our Experts</h1>
-            <input type="text" id="searchInput" placeholder="Search experts...">
-        </header>
+    <!-- Use Firebase Modular SDK with type="module" -->
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
-        <div id="experts-list"></div>
-
-        <footer>
-            <p>&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-        </footer>
-    </div>
-
-    <script>
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
@@ -37,13 +24,12 @@
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database(app);
-
-        const expertsRef = database.ref('experts');
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const expertsRef = ref(database, 'experts');
 
         // Fetching expert data from Firebase
-        expertsRef.on('value', (snapshot) => {
+        onValue(expertsRef, (snapshot) => {
             const expertsContainer = document.getElementById('experts-list');
             const experts = snapshot.val();
 
@@ -100,5 +86,20 @@
             });
         });
     </script>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>Our Experts</h1>
+            <input type="text" id="searchInput" placeholder="Search experts...">
+        </header>
+
+        <div id="experts-list"></div>
+
+        <footer>
+            <p>&copy; EnergyConsult. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+        </footer>
+    </div>
 </body>
 </html>
+
