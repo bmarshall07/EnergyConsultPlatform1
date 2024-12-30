@@ -93,30 +93,37 @@
         onValue(expertsRef, (snapshot) => {
             const expertsContainer = document.getElementById('experts-list');
             const experts = snapshot.val();
-            expertsContainer.innerHTML = ''; // Clear previous content
 
-            for (const key in experts) {
-                if (experts.hasOwnProperty(key)) {
-                    const expert = experts[key];
+            // Clear previous content
+            expertsContainer.innerHTML = '';
 
-                    // Create an expert card
-                    const expertCard = document.createElement('div');
-                    expertCard.className = 'expert-card';
+            // Check if there are experts in the database
+            if (experts) {
+                for (const key in experts) {
+                    if (experts.hasOwnProperty(key)) {
+                        const expert = experts[key];
 
-                    // Populate expert card with data
-                    expertCard.innerHTML = `
-                        <h3>${expert.fullName || 'N/A'}</h3>
-                        <p><strong>Expertise:</strong> ${expert.specialization || 'N/A'}</p>
-                        <p><strong>Email:</strong> ${expert.email || 'N/A'}</p>
-                        <p><strong>Experience:</strong> ${expert.experience || 'N/A'}</p>
-                        <p><strong>Certifications:</strong> ${expert.certifications || 'N/A'}</p>
-                        <p><strong>Key Skills:</strong> ${expert.keySkills || 'N/A'}</p>
-                        <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
-                    `;
+                        // Create an expert card
+                        const expertCard = document.createElement('div');
+                        expertCard.className = 'expert-card';
 
-                    // Add expert card to container
-                    expertsContainer.appendChild(expertCard);
+                        // Populate expert card with data
+                        expertCard.innerHTML = `
+                            <h3>${expert.fullName || 'N/A'}</h3>
+                            <p><strong>Expertise:</strong> ${expert.specialization || 'N/A'}</p>
+                            <p><strong>Email:</strong> ${expert.email || 'N/A'}</p>
+                            <p><strong>Experience:</strong> ${expert.experience || 'N/A'}</p>
+                            <p><strong>Certifications:</strong> ${expert.certifications || 'N/A'}</p>
+                            <p><strong>Key Skills:</strong> ${expert.keySkills || 'N/A'}</p>
+                            <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
+                        `;
+
+                        // Add expert card to container
+                        expertsContainer.appendChild(expertCard);
+                    }
                 }
+            } else {
+                expertsContainer.innerHTML = '<p>No experts available.</p>';
             }
         }, (error) => {
             console.error('Error fetching data:', error);
@@ -140,6 +147,3 @@
     </script>
 </body>
 </html>
-
-
-
