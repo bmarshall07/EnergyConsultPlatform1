@@ -93,6 +93,9 @@
         onValue(expertsRef, (snapshot) => {
             const expertsContainer = document.getElementById('experts-list');
             const experts = snapshot.val();
+            
+            // Log the data to see if it's fetched properly
+            console.log(experts);
 
             // Clear previous content
             expertsContainer.innerHTML = '';
