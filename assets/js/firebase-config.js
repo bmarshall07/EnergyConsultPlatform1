@@ -1,18 +1,17 @@
-// Remove the import lines and just use these
+Firebase Configuration
+
+// firebase-config.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+
 const firebaseConfig = {
-    apiKey: "AIzaSyB5yIyAh89fbbXaTIV3G8RIuU58XUe1q3E",
+    apiKey: process.env.FIREBASE_API_KEY,
     authDomain: "energyconsult-7a837.firebaseapp.com",
     databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "energyconsult-7a837",
     storageBucket: "energyconsult-7a837.appspot.com",
-    messagingSenderId: "13160027292",
-    appId: "1:13160027292:web:1bf66f415c06214f5d8259",
-    measurementId: "G-FT6CQT0NP2"
+    messagingSenderId: "131060027292",
+    appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
+    measurementId: "G-FT6CQTN0P2"
 };
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-
-// Export for other files
-export { database };
+export const app = initializeApp(firebaseConfig);
