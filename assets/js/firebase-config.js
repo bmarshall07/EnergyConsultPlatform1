@@ -1,17 +1,39 @@
-Firebase Configuration
+<script type="module">
+    import { listenToExperts, searchExperts } from './firebase-config.js';
 
-// firebase-config.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+    const expertsContainer = document.getElementById('experts-list');
+    
+    function createExpertCard(expert) {
+        return `
+            <article class="expert-card">
+                <h3>${expert.fullName}</h3>
+                <p class="expertise">${expert.specialization}</p>
+                <p class="email">${expert.email}</p>
+                <p class="experience">Experience: ${expert.experience}</p>
+                <p class="certifications">Certifications: ${expert.certifications}</p>
+                <p class="skills">Key Skills: ${expert.keySkills}</p>
+                <p class="projects">Projects: ${expert.projects}</p>
+            </article>
+        `;
+    }
 
-const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: "energyconsult-7a837.firebaseapp.com",
-    databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "energyconsult-7a837",
-    storageBucket: "energyconsult-7a837.appspot.com",
-    messagingSenderId: "131060027292",
-    appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
-    measurementId: "G-FT6CQTN0P2"
-};
+    let currentExperts = null;
+    listenToExperts((experts) => {
+        currentExperts = experts;
+        if (experts) {
+            expertsContainer.innerHTML = Object.values(experts)
+                .map(createExpertCard)
+                .join('');
+        } else {
+            expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
+        }
+    });
 
-export const app = initializeApp(firebaseConfig);
+    document.getElementById('searchInput').addEventListener('input', function() {
+        if (!currentExperts) return;
+        const filtered = searchExperts(currentExperts, this.value);
+        expertsContainer.innerHTML = filtered.length ? 
+            filtered.map(createExpertCard).join('') : 
+            '<p>No experts found matching your search.</p>';
+    });
+</script>
