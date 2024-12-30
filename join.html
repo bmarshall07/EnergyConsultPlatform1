@@ -1,41 +1,61 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Join the Experts - EnergyConsult</title>
+    <title>Join Our Experts - EnergyConsult</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 </head>
 <body>
-    <div id="wrapper">
-        <header id="header">
-            <div class="content">
-                <h1>Join the Experts</h1>
-                <p>Fill in the form to join our expert network.</p>
-            </div>
-        </header>
-        <main>
-            <article>
-                <form id="expertForm">
-                    <label for="fullName">Full Name:</label>
-                    <input type="text" id="fullName" required>
-                    <label for="specialization">Specialization:</label>
-                    <input type="text" id="specialization" required>
-                    <label for="experience">Experience:</label>
-                    <input type="text" id="experience" required>
-                    <label for="keySkills">Key Skills:</label>
-                    <input type="text" id="keySkills" required>
-                    <label for="certifications">Certifications:</label>
-                    <input type="text" id="certifications" required>
-                    <label for="projects">Projects:</label>
-                    <input type="text" id="projects" required>
-                    <button type="submit">Submit Profile</button>
-                </form>
-            </article>
-        </main>
+    <!-- Header (keep your existing header) -->
+
+    <div class="main">
+        <div class="inner">
+            <h1>Join Our Expert Network</h1>
+            <p>Please fill out the form below to join our network of experts.</p>
+
+            <form id="expertForm" action="submit_profile.php" method="POST">
+                <div class="fields">
+                    <div class="field">
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" name="fullName" id="fullName" required>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="specialization">Specialization:</label>
+                        <input type="text" name="specialization" id="specialization" required>
+                    </div>
+                    <div class="field">
+                        <label for="experience">Years of Experience:</label>
+                        <input type="text" name="experience" id="experience" required>
+                    </div>
+                    <div class="field">
+                        <label for="certifications">Certifications:</label>
+                        <textarea name="certifications" id="certifications" rows="3"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="keySkills">Key Skills:</label>
+                        <textarea name="keySkills" id="keySkills" rows="3" required></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="projects">Notable Projects:</label>
+                        <textarea name="projects" id="projects" rows="3"></textarea>
+                    </div>
+                    <div class="field">
+                        <button type="submit" class="button primary">Submit Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer (keep your existing footer) -->
+
+</body>
+</html>
         <footer id="footer">
             <p>&copy; EnergyConsult. Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
         </footer>
