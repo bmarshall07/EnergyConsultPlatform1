@@ -1,4 +1,4 @@
-<<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Our Experts</title>
@@ -79,77 +79,5 @@
             storageBucket: "energyconsult-7a837.appspot.com",
             messagingSenderId: "131060027292",
             appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
-            measurementId: "G-FT6CQTN0P2"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        // Reference to "experts" in the database
-        const expertsRef = ref(database, 'experts');
-
-        // Function to fetch and display experts
-        onValue(expertsRef, (snapshot) => {
-            const expertsContainer = document.getElementById('experts-list');
-            const experts = snapshot.val();
             
-            // Log the data to see if it's fetched properly
-            console.log("Firebase Data: ", experts);
 
-            // Clear previous content
-            expertsContainer.innerHTML = '';
-
-            // Check if there are experts in the database
-            if (experts) {
-                for (const key in experts) {
-                    if (experts.hasOwnProperty(key)) {
-                        const expert = experts[key];
-
-                        // Debugging: log each expert data
-                        console.log("Expert Data: ", expert);
-
-                        // Create an expert card
-                        const expertCard = document.createElement('div');
-                        expertCard.className = 'expert-card';
-
-                        // Populate expert card with data
-                        expertCard.innerHTML = `
-                            <h3>${expert.fullName || 'N/A'}</h3>
-                            <p><strong>Expertise:</strong> ${expert.specialization || 'N/A'}</p>
-                            <p><strong>Email:</strong> ${expert.email || 'N/A'}</p>
-                            <p><strong>Experience:</strong> ${expert.experience || 'N/A'}</p>
-                            <p><strong>Certifications:</strong> ${expert.certifications || 'N/A'}</p>
-                            <p><strong>Key Skills:</strong> ${expert.keySkills || 'N/A'}</p>
-                            <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
-                        `;
-
-                        // Add expert card to container
-                        expertsContainer.appendChild(expertCard);
-                    }
-                }
-            } else {
-                expertsContainer.innerHTML = '<p>No experts available.</p>';
-            }
-        }, (error) => {
-            console.error('Error fetching data:', error);
-        });
-
-        // Search Functionality
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.expert-card');
-
-            cards.forEach(card => {
-                const name = card.querySelector('h3').textContent.toLowerCase();
-                const expertise = card.querySelector('p').textContent.toLowerCase();
-                if (name.includes(searchTerm) || expertise.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
-</body>
-</html>
