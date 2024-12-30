@@ -1,4 +1,4 @@
-<<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -79,6 +79,100 @@
         // Create expert card HTML
         function createExpertCard(expert) {
             return `
-                <article class="expert-c
+                <article class="expert-card">
+                    <h3>${expert.fullName}</h3>
+                    <p><strong>Specialization:</strong> ${expert.specialization}</p>
+                    <p><strong>Email:</strong> ${expert.email}</p>
+                    <p><strong>Experience:</strong> ${expert.experience}</p>
+                    <p><strong>Certifications:</strong> ${expert.certifications}</p>
+                    <p><strong>Skills:</strong> ${expert.keySkills}</p>
+                    <p><strong>Projects:</strong> ${expert.projects}</p>
+                </article>
+            `;
+        }
 
+        // Populate experts list
+        onValue(expertsRef, (snapshot) => {
+            const expertsContainer = document.getElementById('experts-list');
+            const experts = snapshot.val();
+
+            if (experts) {
+                expertsContainer.innerHTML = Object.values(experts)
+                    .map(expert => createExpertCard(expert))
+                    .join('');
+            } else {
+                expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
+            }
+        }, (error) => {
+            console.error("Error fetching experts:", error);
+        });
+
+        // Implement search functionality
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.expert-card');
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+    </script>
+
+    <!-- Styles -->
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .search-section {
+            margin: 20px 0;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .expert-card {
+            background: #1f1f1f;
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .expert-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .join-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .join-section .button {
+            color: #fff;
+            background: #ffcc00;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</body>
+</html>
 
