@@ -1,97 +1,157 @@
-/ experts.js
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
-import { app } from './firebase-config.js';
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Our Experts - EnergyConsult</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body class="is-preload">
+    <!-- Header -->
+    <header id="header">
+        <a href="index.html" class="logo">EnergyConsult</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="intro.html">Intro</a></li>
+                <li><a href="experts.html" class="active">Experts</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+            </ul>
+        </nav>
+    </header>
 
-const database = getDatabase(app);
-const expertsRef = ref(database, 'experts');
-const expertsContainer = document.getElementById('experts-list');
-const searchInput = document.getElementById('searchInput');
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <h1>Our Experts</h1>
+            <p>Browse our skilled consultants in reservoir engineering, geosciences, and more.</p>
+            
+            <!-- Search -->
+            <section class="search-section">
+                <input type="text" id="searchInput" placeholder="Search experts by name or expertise..." />
+            </section>
 
-// Debounce function for search
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
+            <!-- Experts Grid -->
+            <section class="experts-grid" id="experts-list">
+                <!-- Expert cards will be dynamically inserted here -->
+            </section>
 
-// Display loading state
-function showLoading() {
-    expertsContainer.innerHTML = '<div class="loading">Loading experts...</div>';
-}
-
-// Display error state
-function showError(message) {
-    expertsContainer.innerHTML = `<div class="error">Error: ${message}</div>`;
-}
-
-// Create expert card HTML
-function createExpertCard(expert) {
-    return `
-        <div class="expert-card">
-            <h3>${expert.fullName}</h3>
-            <p><strong>Specialization:</strong> ${expert.specialization}</p>
-            <p><strong>Experience:</strong> ${expert.experience}</p>
-            <p><strong>Certifications:</strong> ${expert.certifications}</p>
-            <p><strong>Key Skills:</strong> ${expert.keySkills}</p>
-            <p><strong>Projects:</strong> ${expert.projects}</p>
+            <!-- Join Button -->
+            <section class="join-section">
+                <a href="join.html" class="button primary large">Join the Experts</a>
+            </section>
         </div>
-    `;
-}
+    </div>
 
-// Filter experts based on search term
-function filterExperts(experts, searchTerm) {
-    return Object.values(experts).filter(expert => {
-        const searchFields = [
-            expert.fullName,
-            expert.specialization,
-            expert.keySkills
-        ].map(field => field.toLowerCase());
-        
-        return searchFields.some(field => field.includes(searchTerm));
-    });
-}
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="copyright">
+                <li>&copy; EnergyConsult. All rights reserved</li>
+            </ul>
+        </div>
+    </footer>
 
-// Initialize experts list
-function initExperts() {
-    showLoading();
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
-    onValue(expertsRef, (snapshot) => {
-        const experts = snapshot.val();
-        
-        if (experts) {
-            const expertsList = Object.values(experts)
-                .map(expert => createExpertCard(expert))
-                .join('');
-            expertsContainer.innerHTML = expertsList;
-        } else {
-            expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
+            authDomain: "energyconsult-7a837.firebaseapp.com",
+            databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "energyconsult-7a837",
+            storageBucket: "energyconsult-7a837.appspot.com",
+            messagingSenderId: "131060027292",
+            appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
+            measurementId: "G-FT6CQTN0P2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const expertsRef = ref(database, 'experts');
+
+        function createExpertCard(expert) {
+            return `
+                <article class="expert-card">
+                    <h3>${expert.fullName}</h3>
+                    <p class="expertise">${expert.specialization}</p>
+                    <p class="email">${expert.email}</p>
+                    <p class="experience">Experience: ${expert.experience}</p>
+                    <p class="certifications">Certifications: ${expert.certifications}</p>
+                    <p class="skills">Key Skills: ${expert.keySkills}</p>
+                    <p class="projects">Projects: ${expert.projects}</p>
+                </article>
+            `;
         }
-    }, (error) => {
-        showError('Failed to load experts. Please try again later.');
-        console.error('Firebase error:', error);
-    });
 
-    // Setup search with debouncing
-    searchInput.addEventListener('input', debounce(function() {
-        const searchTerm = this.value.toLowerCase();
-        
         onValue(expertsRef, (snapshot) => {
+            const expertsContainer = document.getElementById('experts-list');
             const experts = snapshot.val();
+
             if (experts) {
-                const filteredExperts = filterExperts(experts, searchTerm);
-                expertsContainer.innerHTML = filteredExperts.length > 0
-                    ? filteredExperts.map(expert => createExpertCard(expert)).join('')
-                    : '<p>No experts found matching your search.</p>';
+                expertsContainer.innerHTML = Object.values(experts)
+                    .map(expert => createExpertCard(expert))
+                    .join('');
+            } else {
+                expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
             }
         });
-    }, 300));
-}
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initExperts);
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.expert-card');
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+    </script>
+
+    <style>
+        .search-section {
+            margin: 2em 0;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 1em;
+            margin-bottom: 2em;
+        }
+        
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2em;
+            margin-bottom: 3em;
+        }
+        
+        .expert-card {
+            background: #f5f5f5;
+            padding: 1.5em;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .expert-card h3 {
+            margin: 0 0 0.5em 0;
+            color: #333;
+        }
+        
+        .join-section {
+            text-align: center;
+            margin: 3em 0;
+        }
+    </style>
+</body>
+</html>
