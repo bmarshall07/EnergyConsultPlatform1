@@ -129,7 +129,7 @@
                     
                     expertsContainer.innerHTML = expertsArray
                         .map(expert => createExpertCard(expert))
-                        .join('');
+                        .join('') ;
                     
                     if (expertsArray.length === 0) {
                         showError('No experts available at the moment.');
@@ -173,4 +173,3 @@
     </script>
 </body>
 </html>
-
