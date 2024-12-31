@@ -85,7 +85,7 @@
             const database = getDatabase(app);
             const loadingMessage = document.getElementById('loadingMessage');
             const errorMessage = document.getElementById('errorMessage');
-            const expertsContainer = document.getElementById('expertCards');
+            const expertCardsContainer = document.getElementById('expertCards');
 
             function createExpertCard(expert) {
                 return `
@@ -107,13 +107,13 @@
                 loadingMessage.classList.add('hidden');
                 const experts = snapshot.val();
 
-                // Log the data to check it's being fetched correctly
+                // Add console.log here to check the data
                 console.log(experts);
 
                 if (experts) {
                     errorMessage.classList.add('hidden');
                     const expertsArray = Object.values(experts).sort((a, b) => (a.fullName || '').localeCompare(b.fullName || ''));
-                    expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
+                    expertCardsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
                     if (expertsArray.length === 0) {
                         showError('No experts available at the moment.');
                     }
