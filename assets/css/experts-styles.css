@@ -1,17 +1,17 @@
 /* Expert cards */
 .expert-card {
-    background: #333; /* Lighter background for better contrast */
+    background: #4a9eff; /* New light blue background */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
-    color: #fff; /* Make sure text is white for readability */
+    color: #fff; /* Keep text white for readability */
 }
 
 /* Expert card heading */
 .expert-card h3 {
-    color: #4a9eff; /* Keep the heading color for visibility */
+    color: #fff; /* White heading for better contrast */
     margin-top: 0;
     margin-bottom: 15px;
 }
