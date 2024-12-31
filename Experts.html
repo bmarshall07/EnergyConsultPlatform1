@@ -67,11 +67,9 @@
 
     <!-- Firebase and Script -->
     <script type="module">
-        // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
             authDomain: "energyconsult-7a837.firebaseapp.com",
@@ -83,18 +81,12 @@
         };
 
         try {
-            // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const database = getDatabase(app);
-            
-            // Get DOM elements
             const loadingMessage = document.getElementById('loadingMessage');
             const errorMessage = document.getElementById('errorMessage');
             const expertsContainer = document.getElementById('expertCards');
-            
-            console.log('Firebase initialized successfully');
 
-            // Create expert card
             function createExpertCard(expert) {
                 return `
                     <article class="expert-card">
@@ -109,27 +101,17 @@
                 `;
             }
 
-            // Fetch and display experts
             const expertsRef = ref(database, 'experts');
-            
-            console.log('Fetching experts data...');
-            
+
             onValue(expertsRef, (snapshot) => {
                 loadingMessage.classList.add('hidden');
                 const experts = snapshot.val();
-                
-                console.log('Received experts data:', experts);
-                
+
                 if (experts) {
                     errorMessage.classList.add('hidden');
-                    const expertsArray = Object.values(experts)
-                        .sort((a, b) => (a.fullName || '').localeCompare(b.fullName || ''));
-                    
-                    console.log(`Processing ${expertsArray.length} experts`);                    
-                    expertsContainer.innerHTML = expertsArray
-                        .map(expert => createExpertCard(expert))
-                        .join('');
-                    
+                    const expertsArray = Object.values(experts).sort((a, b) => (a.fullName || '').localeCompare(b.fullName || ''));
+                    expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
+
                     if (expertsArray.length === 0) {
                         showError('No experts available at the moment.');
                     }
@@ -137,16 +119,14 @@
                     showError('No experts available at the moment.');
                 }
             }, (error) => {
-                console.error('Error fetching experts:', error);
                 showError('Unable to fetch expert data. Please try again later.');
             });
 
-            // Search functionality
             document.getElementById('searchInput').addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase();
                 const cards = document.querySelectorAll('.expert-card');
                 let hasVisibleCards = false;
-                
+
                 cards.forEach(card => {
                     const isVisible = card.textContent.toLowerCase().includes(searchTerm);
                     card.classList.toggle('hidden', !isVisible);
@@ -164,7 +144,6 @@
                 errorMessage.textContent = message;
                 errorMessage.classList.remove('hidden');
             }
-            
         } catch (error) {
             console.error('Critical initialization error:', error);
             showError('Error initializing application. Please refresh the page.');
