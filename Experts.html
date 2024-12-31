@@ -56,69 +56,71 @@
 
     <!-- Firebase and Script -->
     <script type="module">
-        // Import Firebase modules
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
-            authDomain: "energyconsult-7a837.firebaseapp.com",
-            databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "energyconsult-7a837",
-            storageBucket: "energyconsult-7a837.appspot.com",
-            messagingSenderId: "131060027292",
-            appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
-            measurementId: "G-FT6CQTN0P2"
-        };
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
+        authDomain: "energyconsult-7a837.firebaseapp.com",
+        databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "energyconsult-7a837",
+        storageBucket: "energyconsult-7a837.appspot.com",
+        messagingSenderId: "131060027292",
+        appId: "1:131060027292:web:1bf6fe415c06214f5d8259",
+        measurementId: "G-FT6CQTN0P2"
+    };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const expertsRef = ref(database, 'experts');
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const expertsRef = ref(database, 'experts');
 
-        // Create expert card HTML
-        function createExpertCard(expert) {
-            return `
-                <article class="expert-card">
-                    <h3>${expert.fullName}</h3>
-                    <p><strong>Specialization:</strong> ${expert.specialization}</p>
-                    <p><strong>Email:</strong> ${expert.email || 'Not provided'}</p>
-                    <p><strong>Experience:</strong> ${expert.experience}</p>
-                    <p><strong>Certifications:</strong> ${expert.certifications}</p>
-                    <p><strong>Skills:</strong> ${expert.keySkills}</p>
-                    <p><strong>Projects:</strong> ${expert.projects}</p>
-                </article>
-            `;
+    // Create expert card HTML
+    function createExpertCard(expert) {
+        return `
+            <article class="expert-card">
+                <h3>${expert.fullName || "N/A"}</h3>
+                <p><strong>Specialization:</strong> ${expert.specialization || "N/A"}</p>
+                <p><strong>Email:</strong> ${expert.email || "Not provided"}</p>
+                <p><strong>Experience:</strong> ${expert.experience || "N/A"}</p>
+                <p><strong>Certifications:</strong> ${expert.certifications || "N/A"}</p>
+                <p><strong>Skills:</strong> ${expert.keySkills || "N/A"}</p>
+                <p><strong>Projects:</strong> ${expert.projects || "N/A"}</p>
+            </article>
+        `;
+    }
+
+    // Populate experts list
+    onValue(expertsRef, (snapshot) => {
+        const expertsContainer = document.getElementById('expertCards');
+        const experts = snapshot.val();
+
+        if (experts) {
+            expertsContainer.innerHTML = Object.values(experts)
+                .map(expert => createExpertCard(expert))
+                .join('');
+        } else {
+            expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
         }
+    }, (error) => {
+        console.error("Error fetching experts:", error);
+        document.getElementById('expertCards').innerHTML = '<p>Unable to fetch expert data. Please try again later.</p>';
+    });
 
-        // Populate experts list
-        onValue(expertsRef, (snapshot) => {
-            const expertsContainer = document.getElementById('expertCards');  // Updated this line to target new div
-            const experts = snapshot.val();
+    // Implement search functionality
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        const cards = document.querySelectorAll('.expert-card');
 
-            if (experts) {
-                expertsContainer.innerHTML = Object.values(experts)
-                    .map(expert => createExpertCard(expert))
-                    .join('');
-            } else {
-                expertsContainer.innerHTML = '<p>No experts available at the moment.</p>';
-            }
-        }, (error) => {
-            console.error("Error fetching experts:", error);
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(searchTerm) ? '' : 'none';
         });
+    });
+</script>
 
-        // Implement search functionality
-        document.getElementById('searchInput').addEventListener('input', function () {
-            const searchTerm = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.expert-card');
-
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                card.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
-        });
-    </script>
 
     <!-- Styles -->
     <style>
