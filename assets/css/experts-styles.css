@@ -1,0 +1,79 @@
+/* experts-styles.css */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.search-section {
+    margin: 2rem 0;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 0.75rem;
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 0.25rem;
+}
+
+.experts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.expert-card {
+    background: #222;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+    min-height: auto;
+}
+
+.expert-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.expert-card h3 {
+    color: #4a9eff;
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+}
+
+.expert-card p {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+#loadingMessage {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+#errorMessage {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.1rem;
+    background: rgba(255, 68, 68, 0.1);
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    color: #ff4444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .experts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .expert-card {
+        margin: 0.5rem 0;
+    }
+}
