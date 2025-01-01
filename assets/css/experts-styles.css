@@ -1,24 +1,27 @@
 /* Expert Cards */
-.expert-card {
+..expert-card {
     background: #4a9eff; /* Light blue background */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Slightly increased shadow for better separation */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     color: #fff; /* White text for readability */
-    margin-bottom: 20px; /* Space between cards */
-    display: block; /* Ensure block layout */
-    width: 100%; /* Make cards responsive */
 }
 
+
 /* Expert Card Heading */
-.expert-card h3 {
-    color: #fff; /* White heading */
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.5em; /* Slightly larger for better emphasis */
+.expert-card {
+    border: 2px solid red; /* Temporary border */
+    background: #4a9eff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    color: #fff;
 }
+
 
 /* Expert Card Paragraphs */
 .expert-card p {
