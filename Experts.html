@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -88,8 +88,10 @@
         const expertsRef = ref(database, 'experts');
 
         onValue(expertsRef, (snapshot) => {
+            console.log("Fetching data from Firebase..."); // Debug: Confirm data fetch
             loadingMessage.classList.add('hidden');
             const experts = snapshot.val();
+            console.log("Fetched experts:", experts); // Debug: Output fetched data
 
             if (experts) {
                 errorMessage.classList.add('hidden');
@@ -122,9 +124,11 @@
         });
 
         function showError(message) {
+            console.log("Error:", message); // Debug: Log error messages
             errorMessage.textContent = message;
             errorMessage.classList.remove('hidden');
         }
     </script>
 </body>
 </html>
+
