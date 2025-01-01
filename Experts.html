@@ -1,4 +1,4 @@
-<<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -55,6 +55,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
             authDomain: "energyconsult-7a837.firebaseapp.com",
@@ -67,10 +68,13 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+
+        // DOM Elements
         const loadingMessage = document.getElementById('loadingMessage');
         const errorMessage = document.getElementById('errorMessage');
         const expertsContainer = document.getElementById('expertCards');
 
+        // Function to create expert card
         function createExpertCard(expert) {
             return `
                 <article class="expert-card">
@@ -85,13 +89,12 @@
             `;
         }
 
+        // Fetching experts from Firebase
         const expertsRef = ref(database, 'experts');
 
         onValue(expertsRef, (snapshot) => {
-            console.log("Fetching data from Firebase..."); // Debug: Confirm data fetch
             loadingMessage.classList.add('hidden');
             const experts = snapshot.val();
-            console.log("Fetched experts:", experts); // Debug: Output fetched data
 
             if (experts) {
                 errorMessage.classList.add('hidden');
@@ -103,8 +106,12 @@
             } else {
                 showError('No experts available at the moment.');
             }
+        }, (error) => {
+            console.error('Error fetching experts:', error);
+            showError('Failed to load experts. Please try again later.');
         });
 
+        // Search Functionality
         document.getElementById('searchInput').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const cards = document.querySelectorAll('.expert-card');
@@ -123,12 +130,13 @@
             }
         });
 
+        // Show error message
         function showError(message) {
-            console.log("Error:", message); // Debug: Log error messages
             errorMessage.textContent = message;
             errorMessage.classList.remove('hidden');
         }
     </script>
 </body>
 </html>
+
 
