@@ -48,13 +48,24 @@
             const expertsArray = Object.values(experts).sort((a, b) =>
                 (a.fullName || '').localeCompare(b.fullName || '')
             );
-            expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
-            if (expertsArray.length === 0) {
+
+            // Clear the container only once before rendering new cards
+            expertsContainer.innerHTML = '';
+            if (expertsArray.length > 0) {
+                expertsArray.forEach(expert => {
+                    expertsContainer.innerHTML += createExpertCard(expert);
+                });
+            } else {
                 showError('No experts available at the moment.');
             }
         } else {
+            // No data in the database
+            expertsContainer.innerHTML = '';
             showError('No experts available at the moment.');
         }
+    }, (error) => {
+        console.error("Firebase Error:", error.message);
+        showError('Error fetching experts. Please try again later.');
     });
 
     // Search Functionality
@@ -83,5 +94,6 @@
         errorMessage.classList.remove('hidden');
     }
 </script>
+
 
 
