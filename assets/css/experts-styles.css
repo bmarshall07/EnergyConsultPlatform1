@@ -1,24 +1,70 @@
-//* Expert cards */
+/* Expert Cards */
 .expert-card {
     background: #4a9eff; /* Light blue background */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Slightly increased shadow for better separation */
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     color: #fff; /* White text for readability */
+    margin-bottom: 20px; /* Space between cards */
+    display: block; /* Ensure block layout */
+    width: 100%; /* Make cards responsive */
 }
 
-/* Expert card heading */
+/* Expert Card Heading */
 .expert-card h3 {
     color: #fff; /* White heading */
     margin-top: 0;
     margin-bottom: 15px;
+    font-size: 1.5em; /* Slightly larger for better emphasis */
 }
 
-/* Expert card paragraphs */
+/* Expert Card Paragraphs */
 .expert-card p {
     margin: 8px 0;
-    line-height: 1.5;
+    line-height: 1.6; /* Slightly increased line spacing for readability */
     color: #fff; /* White text for visibility */
+    font-size: 1em; /* Standard font size */
+}
+
+/* Container for Expert Cards (if needed) */
+.experts-grid {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Space between cards */
+    margin-top: 20px;
+}
+
+/* Search Section Styling */
+.search-section input {
+    padding: 10px;
+    font-size: 1em;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Error Message Styling */
+.message.error {
+    color: #ff4a4a;
+    background: #ffecec;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: none; /* Hidden by default */
+}
+
+.message.error.hidden {
+    display: none; /* Ensure hidden class works */
+}
+
+/* Loading Message Styling */
+.message {
+    text-align: center;
+    color: #4a9eff;
+    font-weight: bold;
 }
