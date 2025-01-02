@@ -107,3 +107,4 @@ searchInput.addEventListener('input', function() {
 console.log("Script setup completed");
 </script>
 
+
