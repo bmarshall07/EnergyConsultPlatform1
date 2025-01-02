@@ -3,20 +3,12 @@
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
     const firebaseConfig = {
-        apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
-        authDomain: "energyconsult-7a837.firebaseapp.com",
-        databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "energyconsult-7a837",
-        storageBucket: "energyconsult-7a837.appspot.com",
-        messagingSenderId: "131060027292",
-        appId: "1:131060027292:web:1bf6fe415c06214f5d8259"
+        // Your Firebase configuration
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
 
-    // DOM Elements
     const loadingMessage = document.getElementById('loadingMessage');
     const errorMessage = document.getElementById('errorMessage');
     const expertsContainer = document.getElementById('expertCards');
@@ -27,23 +19,12 @@
     expertsContainer.style.display = 'none';
 
     function createExpertCard(expert) {
-        return `
-            <article class="expert-card">
-                <h3>${expert.fullName || 'N/A'}</h3>
-                <p><strong>Specialization:</strong> ${expert.specialization || 'N/A'}</p>
-                <p><strong>Email:</strong> ${expert.email || 'Not provided'}</p>
-                <p><strong>Experience:</strong> ${expert.experience || 'N/A'}</p>
-                <p><strong>Certifications:</strong> ${expert.certifications || 'N/A'}</p>
-                <p><strong>Skills:</strong> ${expert.keySkills || 'N/A'}</p>
-                <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
-            </article>
-        `;
+        // Your existing createExpertCard function
     }
 
-    // Database connection
     const expertsRef = ref(database, 'experts');
-    
-    function handleSnapshot(snapshot) {
+
+    onValue(expertsRef, (snapshot) => {
         const experts = snapshot.val();
         loadingMessage.style.display = 'none';
 
@@ -52,45 +33,26 @@
                 (a.fullName || '').localeCompare(b.fullName || '')
             );
             expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
-            expertsContainer.style.display = 'grid';
+            
+            // Use setTimeout to ensure styles are applied after the content is rendered
+            setTimeout(() => {
+                expertsContainer.style.display = 'grid';
+            }, 0);
+            
             errorMessage.style.display = 'none';
         } else {
             expertsContainer.style.display = 'none';
             errorMessage.textContent = 'No experts available at the moment.';
             errorMessage.style.display = 'block';
         }
-    }
-
-    function handleError(error) {
+    }, (error) => {
         loadingMessage.style.display = 'none';
         expertsContainer.style.display = 'none';
         errorMessage.textContent = 'Error fetching experts. Please try again later.';
         errorMessage.style.display = 'block';
         console.error("Firebase Error:", error);
-    }
-
-    // Attach the onValue listener
-    onValue(expertsRef, handleSnapshot, handleError);
-
-    // Search functionality
-    document.getElementById('searchInput').addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const cards = document.querySelectorAll('.expert-card');
-        let hasVisibleCards = false;
-
-        cards.forEach(card => {
-            const isVisible = card.textContent.toLowerCase().includes(searchTerm);
-            card.style.display = isVisible ? 'flex' : 'none';
-            if (isVisible) hasVisibleCards = true;
-        });
-
-        errorMessage.style.display = (!hasVisibleCards && searchTerm) ? 'block' : 'none';
-        if (!hasVisibleCards && searchTerm) {
-            errorMessage.textContent = 'No experts found matching your search.';
-        }
     });
 
-    // Debug logging
-    console.log("Script loaded and running");
+    // Your existing search functionality
 </script>
 
