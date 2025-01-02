@@ -23,7 +23,7 @@
     const errorMessage = document.getElementById('errorMessage');
     const expertsContainer = document.getElementById('expertCards');
 
-    console.log("DOM elements retrieved");
+    console.log("DOM elements retrieved:", { loadingMessage, errorMessage, expertsContainer });
 
     // Set initial states
     loadingMessage.style.display = 'block';
@@ -116,4 +116,5 @@
 
     console.log("Script setup completed");
 </script>
+
 
