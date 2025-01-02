@@ -50,73 +50,61 @@ const expertsRef = ref(database, 'experts');
 console.log("Attaching onValue listener");
 onValue(expertsRef, (snapshot) => {
     console.log("Data received from Firebase");
-    
     const experts = snapshot.val();
-    
     console.log("Experts data:", experts);
 
     loadingMessage.style.display = 'none';
 
     if (experts && Object.keys(experts).length > 0) {
         console.log("Processing experts data");
-        
         const expertsArray = Object.values(experts).sort((a, b) => 
             (a.fullName || '').localeCompare(b.fullName || '')
         );
-        
         console.log("Sorted experts array:", expertsArray);
 
         expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
-        
         console.log("Expert cards HTML created");
 
-        // Use requestAnimationFrame for smoother rendering
         requestAnimationFrame(() => {
             expertsContainer.style.display = 'grid';
             console.log("Expert container display set to grid");
         });
 
         errorMessage.style.display = 'none';
-        
-        // Ensure cards are visible
-        expertsContainer.style.visibility = 'visible';
-        
-        // Check if cards are displayed correctly
-        console.log("Expert cards are displayed.");
-        
-     } else {
-         console.log("No experts found or empty data");
-         expertsContainer.style.display = 'none';
-         errorMessage.textContent = 'No experts available at the moment.';
-         errorMessage.style.display = 'block';
-     }
+    } else {
+        console.log("No experts found or empty data");
+        expertsContainer.style.display = 'none';
+        errorMessage.textContent = 'No experts available at the moment.';
+        errorMessage.style.display = 'block';
+    }
 }, (error) => {
-     console.error("Firebase Error:", error);
-     loadingMessage.style.display = 'none';
-     expertsContainer.style.display = 'none';
-     errorMessage.textContent = 'Error fetching experts. Please try again later.';
-     errorMessage.style.display = 'block';
+    console.error("Firebase Error:", error);
+    loadingMessage.style.display = 'none';
+    expertsContainer.style.display = 'none';
+    errorMessage.textContent = 'Error fetching experts. Please try again later.';
+    errorMessage.style.display = 'block';
 });
 
 // Search functionality
 searchInput.addEventListener('input', function() {
-     console.log("Search input detected");
-     const searchTerm = this.value.toLowerCase();
-     const cards = document.querySelectorAll('.expert-card');
-     let hasVisibleCards = false;
+    console.log("Search input detected");
+    const searchTerm = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.expert-card');
+    let hasVisibleCards = false;
 
-     cards.forEach(card => {
-         const isVisible = card.textContent.toLowerCase().includes(searchTerm);
-         card.style.display = isVisible ? 'flex' : 'none';
-         if (isVisible) hasVisibleCards = true; 
-     });
+    cards.forEach(card => {
+        const isVisible = card.textContent.toLowerCase().includes(searchTerm);
+        card.style.display = isVisible ? 'flex' : 'none';
+        if (isVisible) hasVisibleCards = true;
+    });
 
-     errorMessage.style.display = (!hasVisibleCards && searchTerm) ? 'block' : 'none';
-     if (!hasVisibleCards && searchTerm) {
-         errorMessage.textContent = 'No experts found matching your search.';
-     }
-     console.log("Search completed, visible cards:", hasVisibleCards);
+    errorMessage.style.display = (!hasVisibleCards && searchTerm) ? 'block' : 'none';
+    if (!hasVisibleCards && searchTerm) {
+        errorMessage.textContent = 'No experts found matching your search.';
+    }
+    console.log("Search completed, visible cards:", hasVisibleCards);
 });
 
 console.log("Script setup completed");
 </script>
+
