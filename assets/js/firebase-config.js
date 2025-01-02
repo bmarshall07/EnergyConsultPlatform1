@@ -2,50 +2,78 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
+    console.log("Script started");
+
     const firebaseConfig = {
-        // Your Firebase configuration
+        apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
+        authDomain: "energyconsult-7a837.firebaseapp.com",
+        databaseURL: "https://energyconsult-7a837-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "energyconsult-7a837",
+        storageBucket: "energyconsult-7a837.appspot.com",
+        messagingSenderId: "131060027292",
+        appId: "1:131060027292:web:1bf6fe415c06214f5d8259"
     };
 
+    console.log("Initializing Firebase");
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
+    console.log("Firebase initialized");
 
     const loadingMessage = document.getElementById('loadingMessage');
     const errorMessage = document.getElementById('errorMessage');
     const expertsContainer = document.getElementById('expertCards');
 
-    console.log("Script started");
+    console.log("DOM elements retrieved");
+
+    // Set initial states
+    loadingMessage.style.display = 'block';
+    errorMessage.style.display = 'none';
+    expertsContainer.style.display = 'none';
 
     function createExpertCard(expert) {
-        // Your existing createExpertCard function
+        return `
+            <article class="expert-card">
+                <h3>${expert.fullName || 'N/A'}</h3>
+                <p><strong>Specialization:</strong> ${expert.specialization || 'N/A'}</p>
+                <p><strong>Email:</strong> ${expert.email || 'Not provided'}</p>
+                <p><strong>Experience:</strong> ${expert.experience || 'N/A'}</p>
+                <p><strong>Certifications:</strong> ${expert.certifications || 'N/A'}</p>
+                <p><strong>Skills:</strong> ${expert.keySkills || 'N/A'}</p>
+                <p><strong>Projects:</strong> ${expert.projects || 'N/A'}</p>
+            </article>
+        `;
     }
 
+    console.log("Creating reference to 'experts' in database");
     const expertsRef = ref(database, 'experts');
 
-    console.log("About to attach onValue listener");
-
+    console.log("Attaching onValue listener");
     onValue(expertsRef, (snapshot) => {
-        console.log("onValue callback triggered");
+        console.log("Data received from Firebase");
         const experts = snapshot.val();
         console.log("Experts data:", experts);
 
         loadingMessage.style.display = 'none';
 
         if (experts && Object.keys(experts).length > 0) {
-            console.log("Experts found, processing data");
+            console.log("Processing experts data");
             const expertsArray = Object.values(experts).sort((a, b) => 
                 (a.fullName || '').localeCompare(b.fullName || '')
             );
+            console.log("Sorted experts array:", expertsArray);
+
             expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
             console.log("Expert cards HTML created");
-            
+
+            // Use requestAnimationFrame for smoother rendering
             requestAnimationFrame(() => {
                 expertsContainer.style.display = 'grid';
                 console.log("Expert container display set to grid");
             });
-            
+
             errorMessage.style.display = 'none';
         } else {
-            console.log("No experts found");
+            console.log("No experts found or empty data");
             expertsContainer.style.display = 'none';
             errorMessage.textContent = 'No experts available at the moment.';
             errorMessage.style.display = 'block';
@@ -58,6 +86,34 @@
         errorMessage.style.display = 'block';
     });
 
-    // Existing search functionality
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', function() {
+        console.log("Search input detected");
+        const searchTerm = this.value.toLowerCase();
+        const cards = document.querySelectorAll('.expert-card');
+        let hasVisibleCards = false;
+
+        cards.forEach(card => {
+            const isVisible = card.textContent.toLowerCase().includes(searchTerm);
+            card.style.display = isVisible ? 'flex' : 'none';
+            if (isVisible) hasVisibleCards = true;
+        });
+
+        errorMessage.style.display = (!hasVisibleCards && searchTerm) ? 'block' : 'none';
+        if (!hasVisibleCards && searchTerm) {
+            errorMessage.textContent = 'No experts found matching your search.';
+        }
+        console.log("Search completed, visible cards:", hasVisibleCards);
+    });
+
+    // Fallback to ensure cards are displayed
+    setTimeout(() => {
+        if (expertsContainer.style.display !== 'grid') {
+            console.log("Forcing display of expert cards after timeout");
+            expertsContainer.style.display = 'grid';
+        }
+    }, 3000);
+
+    console.log("Script setup completed");
 </script>
 
