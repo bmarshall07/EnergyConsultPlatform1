@@ -12,14 +12,20 @@
         appId: "1:131060027292:web:1bf6fe415c06214f5d8259"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
 
+    // DOM Elements
     const loadingMessage = document.getElementById('loadingMessage');
     const errorMessage = document.getElementById('errorMessage');
     const expertsContainer = document.getElementById('expertCards');
 
-    // Function to create expert cards dynamically
+    // Set initial states
+    loadingMessage.style.display = 'block';
+    errorMessage.style.display = 'none';
+    expertsContainer.style.display = 'none';
+
     function createExpertCard(expert) {
         return `
             <article class="expert-card">
@@ -34,65 +40,48 @@
         `;
     }
 
-    // Reference the "experts" node in Firebase Realtime Database
+    // Database connection
     const expertsRef = ref(database, 'experts');
-
-    // Fetch and display experts
+    
     onValue(expertsRef, (snapshot) => {
-        console.log("Fetching data from Firebase...");
         const experts = snapshot.val();
+        loadingMessage.style.display = 'none';
 
-        // Hide the loading message
-        loadingMessage.classList.add('hidden');
-
-        if (experts) {
-            // Clear error messages and display expert data
-            errorMessage.classList.add('hidden');
-            const expertsArray = Object.values(experts).sort((a, b) =>
+        if (experts && Object.keys(experts).length > 0) {
+            const expertsArray = Object.values(experts).sort((a, b) => 
                 (a.fullName || '').localeCompare(b.fullName || '')
             );
-
-            if (expertsArray.length > 0) {
-                // Render all experts
-                expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
-            } else {
-                // No experts available
-                expertsContainer.innerHTML = '';
-                showError('No experts available at the moment.');
-            }
+            expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
+            expertsContainer.style.display = 'grid';
+            errorMessage.style.display = 'none';
         } else {
-            // No data in the database
-            expertsContainer.innerHTML = '';
-            showError('No experts available at the moment.');
+            expertsContainer.style.display = 'none';
+            errorMessage.textContent = 'No experts available at the moment.';
+            errorMessage.style.display = 'block';
         }
     }, (error) => {
-        console.error("Firebase Error:", error.message);
-        showError('Error fetching experts. Please try again later.');
+        loadingMessage.style.display = 'none';
+        expertsContainer.style.display = 'none';
+        errorMessage.textContent = 'Error fetching experts. Please try again later.';
+        errorMessage.style.display = 'block';
+        console.error("Firebase Error:", error);
     });
 
-    // Search Functionality
-    document.getElementById('searchInput').addEventListener('input', function () {
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
         const cards = document.querySelectorAll('.expert-card');
         let hasVisibleCards = false;
 
         cards.forEach(card => {
             const isVisible = card.textContent.toLowerCase().includes(searchTerm);
-            card.classList.toggle('hidden', !isVisible);
+            card.style.display = isVisible ? 'flex' : 'none';
             if (isVisible) hasVisibleCards = true;
         });
 
+        errorMessage.style.display = (!hasVisibleCards && searchTerm) ? 'block' : 'none';
         if (!hasVisibleCards && searchTerm) {
-            showError('No experts found matching your search.');
-        } else {
-            errorMessage.classList.add('hidden');
+            errorMessage.textContent = 'No experts found matching your search.';
         }
     });
-
-    // Error Display Function
-    function showError(message) {
-        console.error("Error:", message); // Log error messages
-        errorMessage.textContent = message;
-        errorMessage.classList.remove('hidden');
-    }
 </script>
