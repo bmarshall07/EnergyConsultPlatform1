@@ -43,7 +43,7 @@
     // Database connection
     const expertsRef = ref(database, 'experts');
     
-    onValue(expertsRef, (snapshot) => {
+    function handleSnapshot(snapshot) {
         const experts = snapshot.val();
         loadingMessage.style.display = 'none';
 
@@ -59,13 +59,18 @@
             errorMessage.textContent = 'No experts available at the moment.';
             errorMessage.style.display = 'block';
         }
-    }, (error) => {
+    }
+
+    function handleError(error) {
         loadingMessage.style.display = 'none';
         expertsContainer.style.display = 'none';
         errorMessage.textContent = 'Error fetching experts. Please try again later.';
         errorMessage.style.display = 'block';
         console.error("Firebase Error:", error);
-    });
+    }
+
+    // Attach the onValue listener
+    onValue(expertsRef, handleSnapshot, handleError);
 
     // Search functionality
     document.getElementById('searchInput').addEventListener('input', function() {
@@ -84,4 +89,8 @@
             errorMessage.textContent = 'No experts found matching your search.';
         }
     });
+
+    // Debug logging
+    console.log("Script loaded and running");
 </script>
+
