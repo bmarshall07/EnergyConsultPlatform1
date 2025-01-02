@@ -116,5 +116,3 @@
 
     console.log("Script setup completed");
 </script>
-
-
