@@ -40,22 +40,24 @@
     // Fetch and display experts
     onValue(expertsRef, (snapshot) => {
         console.log("Fetching data from Firebase...");
-        loadingMessage.classList.add('hidden');
         const experts = snapshot.val();
 
+        // Hide the loading message
+        loadingMessage.classList.add('hidden');
+
         if (experts) {
+            // Clear error messages and display expert data
             errorMessage.classList.add('hidden');
             const expertsArray = Object.values(experts).sort((a, b) =>
                 (a.fullName || '').localeCompare(b.fullName || '')
             );
 
-            // Clear the container only once before rendering new cards
-            expertsContainer.innerHTML = '';
             if (expertsArray.length > 0) {
-                expertsArray.forEach(expert => {
-                    expertsContainer.innerHTML += createExpertCard(expert);
-                });
+                // Render all experts
+                expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
             } else {
+                // No experts available
+                expertsContainer.innerHTML = '';
                 showError('No experts available at the moment.');
             }
         } else {
@@ -94,6 +96,3 @@
         errorMessage.classList.remove('hidden');
     }
 </script>
-
-
-
