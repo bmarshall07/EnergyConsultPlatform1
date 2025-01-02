@@ -21,10 +21,15 @@ console.log("Firebase initialized");
 const loadingMessage = document.getElementById('loadingMessage');
 const errorMessage = document.getElementById('errorMessage');
 const expertsContainer = document.getElementById('expertCards');
+const searchInput = document.getElementById('searchInput');
 
-console.log("DOM elements retrieved:", { loadingMessage, errorMessage, expertsContainer });
+console.log("DOM elements retrieved:", { loadingMessage, errorMessage, expertsContainer, searchInput });
 
-// Set initial states
+if (!loadingMessage || !errorMessage || !expertsContainer || !searchInput) {
+    console.error("One or more required DOM elements not found");
+    return;
+}
+
 loadingMessage.style.display = 'block';
 errorMessage.style.display = 'none';
 expertsContainer.style.display = 'none';
@@ -64,7 +69,6 @@ onValue(expertsRef, (snapshot) => {
         expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
         console.log("Expert cards HTML created");
 
-        // Use requestAnimationFrame for smoother rendering
         requestAnimationFrame(() => {
             expertsContainer.style.display = 'grid';
             console.log("Expert container display set to grid");
@@ -85,8 +89,7 @@ onValue(expertsRef, (snapshot) => {
     errorMessage.style.display = 'block';
 });
 
-// Search functionality
-document.getElementById('searchInput').addEventListener('input', function() {
+searchInput.addEventListener('input', function() {
     console.log("Search input detected");
     const searchTerm = this.value.toLowerCase();
     const cards = document.querySelectorAll('.expert-card');
@@ -105,7 +108,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
     console.log("Search completed, visible cards:", hasVisibleCards);
 });
 
-// Fallback to ensure cards are displayed
 setTimeout(() => {
     if (expertsContainer.style.display !== 'grid') {
         console.log("Forcing display of expert cards after timeout");
