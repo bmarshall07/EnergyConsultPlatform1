@@ -5,7 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Experts - EnergyConsult</title>
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/experts-styles.css">
+    <style>
+        #expertCards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .expert-card {
+            background: #4a9eff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            animation: fadeIn 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .expert-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .expert-card p {
+            margin: 6px 0;
+            line-height: 1.4;
+            font-size: 1em;
+        }
+
+        #searchInput {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        #loadingMessage,
+        #errorMessage {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        #errorMessage {
+            background: #ffecec;
+            color: #ff4a4a;
+            display: none;
+        }
+
+        #loadingMessage {
+            background: #e8f4ff;
+            color: #4a9eff;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
     <header id="header">
@@ -30,10 +101,10 @@
                 <input type="text" id="searchInput" placeholder="Search experts by name or expertise...">
             </section>
 
-            <div id="loadingMessage" class="message">Loading experts...</div>
-            <div id="errorMessage" class="message error hidden"></div>
+            <div id="loadingMessage">Loading experts...</div>
+            <div id="errorMessage"></div>
 
-            <section class="experts-grid" id="experts-list">
+            <section class="experts-grid">
                 <div id="expertCards"></div>
             </section>
 
@@ -55,7 +126,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB5yIyAhB9fbbaXTW03GRBIuU58XUe1q3E",
             authDomain: "energyconsult-7a837.firebaseapp.com",
@@ -69,12 +139,10 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // DOM Elements
         const loadingMessage = document.getElementById('loadingMessage');
         const errorMessage = document.getElementById('errorMessage');
         const expertsContainer = document.getElementById('expertCards');
 
-        // Function to create expert card
         function createExpertCard(expert) {
             return `
                 <article class="expert-card">
@@ -89,29 +157,38 @@
             `;
         }
 
-        // Fetching experts from Firebase
         const expertsRef = ref(database, 'experts');
 
         onValue(expertsRef, (snapshot) => {
-            loadingMessage.classList.add('hidden');
+            loadingMessage.style.display = 'none';
             const experts = snapshot.val();
 
             if (experts) {
-                errorMessage.classList.add('hidden');
-                const expertsArray = Object.values(experts).sort((a, b) => (a.fullName || '').localeCompare(b.fullName || ''));
-                expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
-                if (expertsArray.length === 0) {
-                    showError('No experts available at the moment.');
+                errorMessage.style.display = 'none';
+                const expertsArray = Object.values(experts).sort((a, b) => 
+                    (a.fullName || '').localeCompare(b.fullName || '')
+                );
+
+                if (expertsArray.length > 0) {
+                    expertsContainer.innerHTML = expertsArray.map(createExpertCard).join('');
+                    expertsContainer.style.display = 'grid';
+                } else {
+                    expertsContainer.style.display = 'none';
+                    errorMessage.textContent = 'No experts available at the moment.';
+                    errorMessage.style.display = 'block';
                 }
             } else {
-                showError('No experts available at the moment.');
+                expertsContainer.style.display = 'none';
+                errorMessage.textContent = 'No experts available at the moment.';
+                errorMessage.style.display = 'block';
             }
         }, (error) => {
-            console.error('Error fetching experts:', error);
-            showError('Failed to load experts. Please try again later.');
+            loadingMessage.style.display = 'none';
+            errorMessage.textContent = 'Error fetching experts. Please try again later.';
+            errorMessage.style.display = 'block';
+            console.error("Firebase Error:", error);
         });
 
-        // Search Functionality
         document.getElementById('searchInput').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const cards = document.querySelectorAll('.expert-card');
@@ -119,24 +196,15 @@
 
             cards.forEach(card => {
                 const isVisible = card.textContent.toLowerCase().includes(searchTerm);
-                card.classList.toggle('hidden', !isVisible);
+                card.style.display = isVisible ? 'flex' : 'none';
                 if (isVisible) hasVisibleCards = true;
             });
 
+            errorMessage.style.display = !hasVisibleCards && searchTerm ? 'block' : 'none';
             if (!hasVisibleCards && searchTerm) {
-                showError('No experts found matching your search.');
-            } else {
-                errorMessage.classList.add('hidden');
+                errorMessage.textContent = 'No experts found matching your search.';
             }
         });
-
-        // Show error message
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.remove('hidden');
-        }
     </script>
 </body>
 </html>
-
-
