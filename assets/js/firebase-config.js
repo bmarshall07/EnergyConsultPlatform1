@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+iimport { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
 console.log("Script started");
@@ -21,15 +21,10 @@ console.log("Firebase initialized");
 const loadingMessage = document.getElementById('loadingMessage');
 const errorMessage = document.getElementById('errorMessage');
 const expertsContainer = document.getElementById('expertCards');
-const searchInput = document.getElementById('searchInput');
 
-console.log("DOM elements retrieved:", { loadingMessage, errorMessage, expertsContainer, searchInput });
+console.log("DOM elements retrieved:", { loadingMessage, errorMessage, expertsContainer });
 
-if (!loadingMessage || !errorMessage || !expertsContainer || !searchInput) {
-    console.error("One or more required DOM elements not found");
-    return;
-}
-
+// Set initial states
 loadingMessage.style.display = 'block';
 errorMessage.style.display = 'none';
 expertsContainer.style.display = 'none';
@@ -89,7 +84,8 @@ onValue(expertsRef, (snapshot) => {
     errorMessage.style.display = 'block';
 });
 
-searchInput.addEventListener('input', function() {
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function() {
     console.log("Search input detected");
     const searchTerm = this.value.toLowerCase();
     const cards = document.querySelectorAll('.expert-card');
@@ -108,11 +104,5 @@ searchInput.addEventListener('input', function() {
     console.log("Search completed, visible cards:", hasVisibleCards);
 });
 
-setTimeout(() => {
-    if (expertsContainer.style.display !== 'grid') {
-        console.log("Forcing display of expert cards after timeout");
-        expertsContainer.style.display = 'grid';
-    }
-}, 3000);
-
 console.log("Script setup completed");
+
